@@ -1,0 +1,1274 @@
+/**
+ * ASTP Versioning - Frontend Styles
+ */
+
+/* Version Information Display */
+.astp-version-info {
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.astp-version-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.astp-version-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.astp-version-number {
+    background: #2271b1;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.astp-version-details {
+    margin-bottom: 15px;
+}
+
+.astp-version-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.astp-meta-item {
+    flex: 1;
+    min-width: 150px;
+}
+
+.astp-meta-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    font-size: 13px;
+    color: #666;
+}
+
+.astp-meta-value {
+    font-size: 14px;
+}
+
+.astp-document-downloads {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.astp-document-downloads h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.astp-download-links {
+    display: flex;
+    gap: 10px;
+}
+
+.astp-download-button {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #2271b1;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.astp-download-button:hover {
+    background: #135e96;
+    color: #fff;
+    text-decoration: none;
+}
+
+.astp-download-button i {
+    margin-right: 5px;
+}
+
+/* Version History */
+.astp-version-history {
+    margin: 20px 0;
+}
+
+.astp-history-header {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.astp-history-title {
+    font-size: 20px;
+    margin: 0;
+}
+
+.astp-version-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.astp-version-list-item {
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+.astp-version-list-item:hover {
+    background: #f5f5f5;
+}
+
+.astp-version-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.astp-version-list-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.astp-version-badge {
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.astp-version-list-meta {
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.astp-version-list-meta span {
+    margin-right: 15px;
+}
+
+.astp-version-list-meta strong {
+    font-weight: bold;
+}
+
+.astp-version-list-content {
+    display: none;
+    padding-top: 10px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.astp-version-list-content.active {
+    display: block;
+}
+
+/* Changes Display */
+.astp-changes-display {
+    margin: 20px 0;
+}
+
+.astp-changes-header {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.astp-changes-title {
+    font-size: 20px;
+    margin: 0;
+}
+
+.astp-changes-summary {
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.astp-changes-counts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.astp-changes-badge {
+    display: inline-block;
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.astp-additions {
+    background: #c6e1c6;
+    color: #5b841b;
+}
+
+.astp-removals {
+    background: #f8a9a9;
+    color: #881919;
+}
+
+.astp-amendments {
+    background: #e1e1c6;
+    color: #847b1b;
+}
+
+.astp-changes-section {
+    margin-bottom: 30px;
+}
+
+.astp-section-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.astp-changes-type {
+    font-size: 16px;
+    margin: 15px 0 10px 0;
+    font-weight: bold;
+}
+
+.astp-changes-list {
+    list-style: disc;
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.astp-change-item {
+    margin-bottom: 15px;
+}
+
+.astp-change-summary {
+    font-weight: bold;
+}
+
+.astp-change-description {
+    margin-top: 5px;
+    color: #555;
+}
+
+.astp-toggle-details {
+    display: inline-block;
+    margin-top: 5px;
+    color: #2271b1;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.astp-change-details {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+}
+
+.astp-change-details.active {
+    display: block;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 782px) {
+    .astp-version-info-header,
+    .astp-version-list-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .astp-version-title,
+    .astp-version-list-title {
+        margin-bottom: 10px;
+    }
+    
+    .astp-version-meta {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .astp-meta-item {
+        width: 100%;
+    }
+    
+    .astp-download-links {
+        flex-direction: column;
+    }
+}
+
+/* Revision History UI - Updated and improved */
+.astp-revision-history {
+    margin: 2rem 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    color: #333;
+}
+
+.astp-revision-history h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #ddd;
+    color: #1e50a0;
+}
+
+/* Filter controls */
+.astp-filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    background-color: #f5f7fa;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.astp-filter-label {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #555;
+    margin-right: 1rem;
+}
+
+.astp-filter-button {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #555;
+    cursor: pointer;
+    font-size: 0.875rem;
+    padding: 0.4rem 1rem;
+    transition: all 0.2s;
+}
+
+.astp-filter-button:hover {
+    background-color: #f1f5f9;
+    border-color: #ccc;
+}
+
+.astp-filter-button.active {
+    background-color: #1e50a0;
+    color: white;
+    border-color: #1e50a0;
+}
+
+/* Timeline style for revision list */
+.astp-revision-list {
+    position: relative;
+    padding-left: 2px;
+}
+
+.astp-revision-list::before {
+    content: '';
+    position: absolute;
+    left: 9px;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background-color: #ddd;
+    z-index: 0;
+}
+
+.astp-revision-entry {
+    position: relative;
+    padding-left: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.astp-revision-entry::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: #1e50a0;
+    border: 2px solid white;
+    z-index: 1;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.astp-revision-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.25rem;
+}
+
+.astp-revision-header h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+    color: #1e50a0;
+}
+
+.astp-revision-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    color: #666;
+    font-size: 0.875rem;
+    gap: 1rem;
+}
+
+.astp-revision-date {
+    font-weight: 500;
+    background-color: #f5f7fa;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+}
+
+.astp-revision-author {
+    display: flex;
+    align-items: center;
+}
+
+/* Changes display */
+.astp-changes-summary {
+    display: flex;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    border-left: 3px solid #1e50a0;
+}
+
+.astp-changes-counts {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.astp-changes-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.astp-badge-added {
+    background-color: #e6ffec;
+    color: #28a745;
+}
+
+.astp-badge-removed {
+    background-color: #ffebe9;
+    color: #d73a49;
+}
+
+.astp-badge-amended {
+    background-color: #e9f2fb;
+    color: #0366d6;
+}
+
+.astp-changes-content {
+    margin-top: 1rem;
+}
+
+/* Sections and change groups */
+.astp-revision-section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+}
+
+.astp-revision-section:last-child {
+    border-bottom: none;
+}
+
+.astp-section-heading {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 1rem 0;
+    padding: 0.5rem 0;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.astp-section-heading::before {
+    content: '•';
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+    color: #1e50a0;
+}
+
+.astp-change-group {
+    margin-bottom: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.astp-change-group-added {
+    border-left: 3px solid #28a745;
+}
+
+.astp-change-group-removed {
+    border-left: 3px solid #d73a49;
+}
+
+.astp-change-group-amended {
+    border-left: 3px solid #0366d6;
+}
+
+.astp-change-type-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+}
+
+.astp-change-type-heading::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    display: inline-block;
+}
+
+.astp-change-group-added .astp-change-type-heading {
+    color: #28a745;
+}
+
+.astp-change-group-added .astp-change-type-heading::before {
+    background-color: #28a745;
+}
+
+.astp-change-group-removed .astp-change-type-heading {
+    color: #d73a49;
+}
+
+.astp-change-group-removed .astp-change-type-heading::before {
+    background-color: #d73a49;
+}
+
+.astp-change-group-amended .astp-change-type-heading {
+    color: #0366d6;
+}
+
+.astp-change-group-amended .astp-change-type-heading::before {
+    background-color: #0366d6;
+}
+
+/* Change items */
+.astp-change-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.astp-change-item {
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.astp-change-item:last-child {
+    margin-bottom: 0;
+}
+
+.astp-change-header {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.astp-change-reference {
+    font-weight: 600;
+    background-color: #f1f5f9;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.astp-change-title {
+    font-weight: 500;
+    color: #333;
+}
+
+.astp-change-content {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #444;
+}
+
+/* Diff styling improvements */
+.astp-change-diff,
+.astp-manual-diff {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    overflow: auto;
+}
+
+.astp-content-diff {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0.5rem;
+}
+
+.astp-content-diff th {
+    background-color: #f5f7fa;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    text-align: left;
+    border: 1px solid #eee;
+}
+
+.astp-content-diff td {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid #eee;
+    vertical-align: top;
+}
+
+.astp-content-diff ins {
+    background-color: #e6ffec;
+    text-decoration: none;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+.astp-content-diff del {
+    background-color: #ffebe9;
+    text-decoration: line-through;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+.astp-manual-diff {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.astp-manual-diff .diff-old {
+    padding: 0.75rem;
+    background-color: #ffebe9;
+    border-radius: 4px;
+    position: relative;
+    border: 1px solid rgba(215,58,73,0.2);
+}
+
+.astp-manual-diff .diff-new {
+    padding: 0.75rem;
+    background-color: #e6ffec;
+    border-radius: 4px;
+    position: relative;
+    border: 1px solid rgba(40,167,69,0.2);
+}
+
+.astp-manual-diff h4 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: #666;
+    text-transform: uppercase;
+}
+
+/* Table changes styling */
+.astp-table-changes {
+    margin-top: 1rem;
+    overflow-x: auto;
+}
+
+.astp-table-changes h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #333;
+}
+
+.astp-table-changes table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.astp-table-changes th {
+    background-color: #f5f7fa;
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-weight: 600;
+}
+
+.astp-table-changes td {
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    border: 1px solid #ddd;
+    vertical-align: top;
+}
+
+.astp-table-changes td:last-child {
+    width: 100px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.astp-table-changes td del {
+    background-color: #ffebe9;
+    text-decoration: line-through;
+    display: block;
+    margin-bottom: 0.25rem;
+    padding: 0.1rem 0.25rem;
+    border-radius: 2px;
+}
+
+.astp-table-changes td ins {
+    background-color: #e6ffec;
+    text-decoration: none;
+    display: block;
+    padding: 0.1rem 0.25rem;
+    border-radius: 2px;
+}
+
+/* Show more section */
+.astp-revision-show-more {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.astp-show-all-revisions {
+    background-color: #1e50a0;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.astp-show-all-revisions:hover {
+    background-color: #143a7c;
+    text-decoration: none;
+    color: white;
+}
+
+.astp-show-all-revisions::after {
+    content: '→';
+    font-size: 1.2em;
+}
+
+/* Attribute changes styling */
+.astp-attribute-changes {
+    margin-bottom: 1rem;
+    background-color: #f5f7fa;
+    border-radius: 6px;
+    padding: 1rem;
+    border: 1px solid #eee;
+}
+
+.astp-attribute-changes h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem 0;
+    color: #333;
+}
+
+.astp-attribute-changes ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.astp-attribute-changes li {
+    margin-bottom: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.astp-attribute-changes li:last-child {
+    margin-bottom: 0;
+}
+
+.astp-attribute-changes strong {
+    color: #555;
+    font-weight: 600;
+}
+
+.astp-attribute-changes del {
+    background-color: #ffebe9;
+    text-decoration: line-through;
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+    color: #d73a49;
+}
+
+.astp-attribute-changes ins {
+    background-color: #e6ffec;
+    text-decoration: none;
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+    color: #28a745;
+}
+
+/* Empty state message */
+.astp-no-changes {
+    padding: 2rem;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    margin: 1rem 0;
+    color: #666;
+}
+
+.astp-no-changes p {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .astp-revision-header {
+        flex-direction: column;
+    }
+    
+    .astp-filter-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .astp-filter-button {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .astp-manual-diff {
+        flex-direction: column;
+    }
+    
+    .astp-attribute-changes li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .astp-revision-entry {
+        padding-left: 2rem;
+    }
+    
+    .astp-revision-entry::before {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* Loading state */
+.astp-loading {
+    position: relative;
+    min-height: 100px;
+    opacity: 0.7;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.astp-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #2271b1;
+    border-radius: 50%;
+    animation: astp-spin 1s linear infinite;
+}
+
+@keyframes astp-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Error display */
+.astp-error {
+    padding: 10px 15px;
+    margin: 10px 0;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+}
+
+/* Improved compact diff styles */
+.astp-compact-diff {
+    padding: 1rem;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    margin: 0.5rem 0;
+    font-family: monospace;
+    line-height: 1.5;
+    max-width: 100%;
+    overflow-x: auto;
+    font-size: 0.95rem;
+}
+
+.diff-compact {
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    border: 1px solid #eee;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    line-height: 1.5;
+}
+
+/* Highlight just the changes */
+.diff-compact ins,
+.astp-compact-diff ins,
+.astp-attribute-changes ins {
+    background-color: #e6ffec;
+    text-decoration: none;
+    padding: 0 2px;
+    border-radius: 2px;
+    display: inline-block;
+    color: #28a745;
+    font-weight: 500;
+}
+
+.diff-compact del,
+.astp-compact-diff del,
+.astp-attribute-changes del {
+    background-color: #ffebe9;
+    text-decoration: line-through;
+    padding: 0 2px;
+    border-radius: 2px;
+    display: inline-block;
+    color: #d73a49;
+    font-weight: 500;
+}
+
+/* Fix for deleted text within diff views */
+.astp-manual-diff .diff-old,
+.astp-table-changes td del {
+    display: block;
+    background-color: #ffebe9;
+    text-decoration: line-through;
+    margin-bottom: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: #d73a49;
+}
+
+/* Fix for inserted text within diff views */
+.astp-manual-diff .diff-new,
+.astp-table-changes td ins {
+    display: block;
+    background-color: #e6ffec;
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: #28a745;
+}
+
+/* Improved diff styling */
+.astp-tiny-diff {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+.astp-tiny-diff .diff-old-text {
+    background-color: #ffecec;
+    color: #b71c1c;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid #ffcdd2;
+    font-weight: 500;
+}
+
+.astp-tiny-diff .diff-arrow {
+    margin: 0 8px;
+    color: #555;
+}
+
+.astp-tiny-diff .diff-new-text {
+    background-color: #e8f5e9;
+    color: #1b5e20;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid #c8e6c9;
+    font-weight: 500;
+}
+
+.astp-side-by-side-diff {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+
+.astp-side-by-side-diff .diff-old-content {
+    background-color: #ffecec;
+    color: #b71c1c;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ffcdd2;
+    margin-bottom: 5px;
+    flex: 1 1 40%;
+    min-width: 200px;
+}
+
+.astp-side-by-side-diff .diff-arrow {
+    margin: 0 15px;
+    color: #555;
+    font-weight: bold;
+}
+
+.astp-side-by-side-diff .diff-new-content {
+    background-color: #e8f5e9;
+    color: #1b5e20;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #c8e6c9;
+    margin-bottom: 5px;
+    flex: 1 1 40%;
+    min-width: 200px;
+}
+
+.astp-inline-diff {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+.astp-inline-diff del {
+    background-color: #ffecec;
+    color: #b71c1c;
+    padding: 0 3px;
+    text-decoration: line-through;
+    font-weight: normal;
+}
+
+.astp-inline-diff ins {
+    background-color: #e8f5e9;
+    color: #1b5e20;
+    padding: 0 3px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.structure-changed-diff {
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 10px 15px;
+    margin: 10px 0;
+    color: #555;
+}
+
+.structure-changed-diff p {
+    margin: 5px 0;
+}
+
+.structure-changed-diff p:first-child {
+    font-weight: bold;
+}
+
+/* Document type badges for revision history */
+.astp-document-type-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+.astp-document-type-badge.astp-document-ccg {
+    background-color: #e1f5fe;
+    color: #0277bd;
+    border: 1px solid #b3e5fc;
+}
+
+.astp-document-type-badge.astp-document-tp {
+    background-color: #e8f5e9;
+    color: #388e3c;
+    border: 1px solid #c8e6c9;
+}
+
+/* Enhance revision history headers by document type */
+h2.astp-revision-history-title.astp-ccg-title {
+    color: #0277bd;
+    border-bottom: 2px solid #0277bd;
+    padding-bottom: 8px;
+}
+
+h2.astp-revision-history-title.astp-tp-title {
+    color: #388e3c;
+    border-bottom: 2px solid #388e3c;
+    padding-bottom: 8px;
+}
+
+/* Add document type indicator to revision entries */
+.astp-revision-entry.astp-revision-ccg {
+    border-left: 4px solid #0277bd;
+}
+
+.astp-revision-entry.astp-revision-tp {
+    border-left: 4px solid #388e3c;
+}
+
+/* Enhanced version history styling */
+.astp-revision-history {
+    margin-bottom: 40px;
+}
+
+.astp-revision-list {
+    margin-top: 20px;
+}
+
+.astp-revision-entry {
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Add styling to make version entries look like a timeline */
+.astp-revision-list {
+    position: relative;
+}
+
+.astp-revision-list:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 20px;
+    width: 2px;
+    background-color: #e0e0e0;
+    z-index: 0;
+}
+
+.astp-revision-entry {
+    position: relative;
+    margin-left: 40px;
+    z-index: 1;
+}
+
+.astp-revision-entry:before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: -28px;
+    top: 20px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+}
+
+.astp-revision-entry.astp-revision-ccg:before {
+    border-color: #0277bd;
+}
+
+.astp-revision-entry.astp-revision-tp:before {
+    border-color: #388e3c;
+}
+
+/* Version History with document types */
+.astp-document-history-section {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e5e5e5;
+}
+
+.astp-document-history-section:last-child {
+    border-bottom: none;
+}
+
+.astp-ccg-title {
+    color: #006eb4;
+    border-bottom: 2px solid #006eb4;
+    padding-bottom: 8px;
+}
+
+.astp-tp-title {
+    color: #3c6e21;
+    border-bottom: 2px solid #3c6e21;
+    padding-bottom: 8px;
+}
+
+/* Document type badges */
+.astp-document-type-badge {
+    display: inline-block;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.astp-document-ccg {
+    background-color: #006eb4;
+}
+
+.astp-document-tp {
+    background-color: #3c6e21;
+}
+
+/* Document-specific revision entries */
+.astp-revision-ccg {
+    border-left: 4px solid #006eb4;
+}
+
+.astp-revision-tp {
+    border-left: 4px solid #3c6e21;
+}

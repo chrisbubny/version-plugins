@@ -1,0 +1,98 @@
+/**
+ * ASTP Versioning - PDF Styles
+ */
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+}
+
+h1 {
+    font-size: 24pt;
+    margin-bottom: 10pt;
+    color: #333;
+}
+
+h2 {
+    font-size: 18pt;
+    margin-bottom: 8pt;
+    color: #444;
+}
+
+h3 {
+    font-size: 14pt;
+    margin-bottom: 8pt;
+    color: #555;
+}
+
+h4, h5, h6 {
+    margin-bottom: 6pt;
+    color: #666;
+}
+
+.header {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20pt;
+    padding-bottom: 10pt;
+}
+
+p {
+    margin-bottom: 12pt;
+}
+
+ul, ol {
+    margin-bottom: 12pt;
+    margin-left: 15pt;
+}
+
+li {
+    margin-bottom: 5pt;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 12pt;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8pt;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+a {
+    color: #0066cc;
+    text-decoration: underline;
+}
+
+blockquote {
+    margin: 15pt 30pt;
+    padding: 10pt;
+    border-left: 4pt solid #ddd;
+    background-color: #f9f9f9;
+}
+
+img {
+    max-width: 95%;
+    height: auto;
+}
+
+.page-number {
+    font-size: 10pt;
+    text-align: center;
+}
+
+.footer {
+    font-size: 10pt;
+    text-align: center;
+    color: #777;
+    border-top: 1px solid #eee;
+    padding-top: 8pt;
+    margin-top: 15pt;
+} 

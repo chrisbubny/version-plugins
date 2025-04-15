@@ -1,0 +1,235 @@
+/**
+ * ASTP Versioning - Test Method Blocks Editor Styles
+ */
+
+/* General block styles */
+.astp-section-title-editor {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+    border-bottom: 1px solid #e2e4e7;
+    padding-bottom: 10px;
+}
+
+/* Title Section Block */
+.astp-title-section-editor {
+    padding: 20px;
+    background: #f8f9f9;
+    border: 1px solid #e2e4e7;
+    margin-bottom: 20px;
+}
+
+.astp-document-header-editor {
+    margin-bottom: 20px;
+}
+
+.astp-document-title-editor {
+    font-size: 28px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.astp-document-info-editor {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    color: #555;
+    font-size: 14px;
+}
+
+.astp-document-introduction-editor {
+    margin-top: 20px;
+    border-top: 1px solid #e2e4e7;
+    padding-top: 15px;
+}
+
+/* Regulation Text Block */
+.astp-regulation-text-editor {
+    padding: 20px;
+    background: #f8f9f9;
+    border: 1px solid #e2e4e7;
+    margin-bottom: 20px;
+}
+
+.astp-regulation-reference-editor {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.astp-regulation-content-editor {
+    min-height: 100px;
+}
+
+/* Standards Referenced Block */
+.astp-standards-referenced-editor {
+    padding: 20px;
+    background: #f8f9f9;
+    border: 1px solid #e2e4e7;
+    margin-bottom: 20px;
+}
+
+.astp-standards-content-editor {
+    margin-bottom: 15px;
+}
+
+.astp-standards-list-preview {
+    margin-top: 15px;
+    border-top: 1px solid #e2e4e7;
+    padding-top: 15px;
+}
+
+.astp-standards-list-preview ul {
+    margin-left: 20px;
+}
+
+.astp-standards-list-preview li {
+    margin-bottom: 10px;
+}
+
+.astp-standard-item-editor {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e2e4e7;
+}
+
+/* Required Update Deadlines Block */
+.astp-update-deadlines-editor {
+    padding: 20px;
+    background: #f8f9f9;
+    border: 1px solid #e2e4e7;
+    margin-bottom: 20px;
+}
+
+.astp-deadlines-content-editor {
+    margin-bottom: 15px;
+}
+
+.astp-deadlines-table-preview {
+    margin-top: 15px;
+    border-top: 1px solid #e2e4e7;
+    padding-top: 15px;
+}
+
+.astp-deadlines-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.astp-deadlines-table th,
+.astp-deadlines-table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.astp-deadlines-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.astp-deadline-item-editor {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e2e4e7;
+}
+
+/* Certification Dependencies Block */
+.astp-certification-dependencies-editor {
+    padding: 20px;
+    background: #f8f9f9;
+    border: 1px solid #e2e4e7;
+    margin-bottom: 20px;
+}
+
+.astp-dependencies-content-editor {
+    margin-bottom: 15px;
+}
+
+.astp-dependencies-list-preview {
+    margin-top: 15px;
+    border-top: 1px solid #e2e4e7;
+    padding-top: 15px;
+}
+
+.astp-dependencies-list-preview ul {
+    margin-left: 20px;
+}
+
+.astp-dependencies-list-preview li {
+    margin-bottom: 15px;
+}
+
+.astp-dependencies-list-preview p {
+    margin-top: 5px;
+    color: #555;
+}
+
+.astp-dependency-item-editor {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e2e4e7;
+}
+
+/* Technical Explanations Block */
+.astp-technical-explanations-editor {
+    padding: 20px;
+    background: #f8f9f9;
+    border: 1px solid #e2e4e7;
+    margin-bottom: 20px;
+}
+
+.astp-explanations-introduction-editor {
+    margin-bottom: 20px;
+}
+
+.astp-explanation-section-editor {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #e2e4e7;
+}
+
+.astp-explanation-title-editor {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.astp-explanation-content-editor {
+    margin-top: 10px;
+}
+
+/* Revision History Block */
+.astp-revision-history-editor {
+    padding: 20px;
+    background: #f8f9f9;
+    border: 1px solid #e2e4e7;
+    margin-bottom: 20px;
+}
+
+.astp-revision-introduction-editor {
+    margin-bottom: 15px;
+}
+
+.astp-revision-history-notice {
+    margin-top: 15px;
+    padding: 10px;
+    background: #e5f5fa;
+    border-left: 4px solid #00a0d2;
+    color: #444;
+    font-style: italic;
+}
+
+/* Inspector controls customization */
+.astp-standards-list-editor,
+.astp-deadlines-editor,
+.astp-dependencies-editor,
+.astp-explanation-sections-editor {
+    margin-bottom: 15px;
+}
+
+.components-panel__body .components-base-control {
+    margin-bottom: 12px;
+} 

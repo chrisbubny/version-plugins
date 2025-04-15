@@ -1,0 +1,267 @@
+/**
+ * ASTP Versioning - Test Method Blocks Frontend Styles
+ */
+
+/* General section styles */
+.astp-section-title {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 10px;
+}
+
+/* Title Section Block */
+.astp-title-section {
+    margin-bottom: 40px;
+}
+
+.astp-document-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.astp-document-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.astp-document-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    color: #555;
+    font-size: 14px;
+}
+
+.astp-document-introduction {
+    margin-top: 20px;
+}
+
+/* Regulation Text Block */
+.astp-regulation-text {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+}
+
+.astp-regulation-reference {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.astp-regulation-content {
+    line-height: 1.6;
+}
+
+/* Standards Referenced Block */
+.astp-standards-referenced {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+}
+
+.astp-standards-content {
+    margin-bottom: 20px;
+}
+
+.astp-standards-list ul {
+    margin-left: 20px;
+    margin-bottom: 0;
+}
+
+.astp-standards-list li {
+    margin-bottom: 10px;
+}
+
+/* Required Update Deadlines Block */
+.astp-update-deadlines {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+}
+
+.astp-deadlines-content {
+    margin-bottom: 20px;
+}
+
+.astp-deadlines-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0;
+}
+
+.astp-deadlines-table th,
+.astp-deadlines-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.astp-deadlines-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.astp-deadlines-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.astp-deadlines-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Certification Dependencies Block */
+.astp-certification-dependencies {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+}
+
+.astp-dependencies-content {
+    margin-bottom: 20px;
+}
+
+.astp-dependencies-list ul {
+    margin-left: 20px;
+    margin-bottom: 0;
+}
+
+.astp-dependencies-list li {
+    margin-bottom: 15px;
+}
+
+.astp-dependencies-list p {
+    margin-top: 5px;
+    color: #555;
+}
+
+/* Technical Explanations Block */
+.astp-technical-explanations {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+}
+
+.astp-explanations-introduction {
+    margin-bottom: 20px;
+}
+
+.astp-explanation-section {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+}
+
+.astp-explanation-title {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 8px;
+}
+
+.astp-explanation-content {
+    line-height: 1.6;
+}
+
+/* Revision History Block */
+.astp-revision-history {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+}
+
+.astp-revision-introduction {
+    margin-bottom: 20px;
+}
+
+.astp-revision-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.astp-revision-table th,
+.astp-revision-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.astp-revision-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.astp-revision-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.astp-revision-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.astp-revision-show-more {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.astp-show-all-revisions {
+    display: inline-block;
+    padding: 5px 15px;
+    background: #2271b1;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.astp-show-all-revisions:hover {
+    background: #135e96;
+    color: #fff;
+    text-decoration: none;
+}
+
+.astp-no-revisions {
+    font-style: italic;
+    color: #555;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 782px) {
+    .astp-document-info {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .astp-deadlines-table,
+    .astp-revision-table {
+        display: block;
+        overflow-x: auto;
+    }
+} 

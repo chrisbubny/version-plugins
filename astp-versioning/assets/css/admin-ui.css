@@ -1,0 +1,451 @@
+/**
+ * ASTP Versioning - Admin UI Styles
+ */
+
+/* Version Manager Metabox */
+.astp-version-controls {
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    margin-bottom: 15px;
+}
+
+.astp-version-controls h4 {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.astp-version-controls select {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.astp-version-status {
+    padding: 4px 8px;
+    border-radius: 3px;
+    display: inline-block;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.astp-status-published {
+    background: #c6e1c6;
+    color: #5b841b;
+}
+
+.astp-status-development {
+    background: #f8dda7;
+    color: #94660c;
+}
+
+.astp-status-deprecated {
+    background: #e5e5e5;
+    color: #777;
+}
+
+/* Version History Table */
+.astp-admin-version-history {
+    margin: 20px 0;
+}
+
+.astp-admin-version-history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.astp-admin-version-history th {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+.astp-admin-version-history td {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.astp-admin-version-history .button {
+    margin-right: 5px;
+}
+
+/* Document-specific styles */
+.astp-ccg-row {
+    background-color: rgba(0, 110, 180, 0.05) !important;
+    border-left: 4px solid #006eb4 !important;
+}
+
+.astp-tp-row {
+    background-color: rgba(60, 110, 33, 0.05) !important;
+    border-left: 4px solid #3c6e21 !important;
+}
+
+/* Add document type badges */
+.astp-ccg-row td:first-child:before,
+.astp-tp-row td:first-child:before {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 4px;
+    border-radius: 3px;
+    margin-right: 6px;
+    color: white;
+    vertical-align: middle;
+}
+
+.astp-ccg-row td:first-child:before {
+    content: "CCG";
+    background-color: #006eb4;
+}
+
+.astp-tp-row td:first-child:before {
+    content: "TP";
+    background-color: #3c6e21;
+}
+
+/* Version history section titles */
+.astp-ccg-section h3 {
+    color: #006eb4;
+    border-bottom: 2px solid #006eb4;
+    padding-bottom: 5px;
+}
+
+.astp-tp-section h3 {
+    color: #3c6e21;
+    border-bottom: 2px solid #3c6e21;
+    padding-bottom: 5px;
+}
+
+/* Version Details Metabox */
+.astp-version-details {
+    margin-bottom: 20px;
+}
+
+.astp-detail-row {
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.astp-detail-row label {
+    min-width: 140px;
+    font-weight: bold;
+}
+
+.astp-detail-value {
+    flex: 1;
+}
+
+.astp-version-actions {
+    margin-top: 20px;
+}
+
+.astp-document-links {
+    margin: 15px 0;
+}
+
+.astp-document-links .button {
+    margin-right: 10px;
+}
+
+.astp-status {
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+/* Changes Meta Box */
+.astp-admin-changes-display {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 0.25rem;
+}
+
+.astp-changes-summary {
+    margin-bottom: 2rem;
+}
+
+.astp-changes-summary h4 {
+    margin: 0 0 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0b2e59;
+}
+
+.astp-changes-counts {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.astp-changes-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.astp-changes-badge.astp-additions {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.astp-changes-badge.astp-removals {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.astp-changes-badge.astp-amendments {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.astp-changes-details h4 {
+    margin: 1.5rem 0 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0b2e59;
+}
+
+.astp-changes-section {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 0.375rem;
+}
+
+.astp-changes-section h3 {
+    margin: 0 0 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #0b2e59;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.astp-changes-type {
+    margin: 1.25rem 0;
+}
+
+.astp-changes-type h4 {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.astp-changes-type.astp-added h4 {
+    color: #166534;
+}
+
+.astp-changes-type.astp-removed h4 {
+    color: #991b1b;
+}
+
+.astp-changes-type.astp-amended h4 {
+    color: #92400e;
+}
+
+.astp-changes-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.astp-change-item {
+    margin: 0.75rem 0;
+    padding: 0.75rem;
+    background: #fff;
+    border-radius: 0.375rem;
+    border-left-width: 4px;
+    border-left-style: solid;
+}
+
+.astp-added .astp-change-item {
+    background-color: #f0fdf4;
+    border-left-color: #22c55e;
+}
+
+.astp-removed .astp-change-item {
+    background-color: #fef2f2;
+    border-left-color: #ef4444;
+}
+
+.astp-amended .astp-change-item {
+    background-color: #fffbeb;
+    border-left-color: #f59e0b;
+}
+
+.astp-change-content,
+.astp-change-diff,
+.astp-change-amended-content {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.astp-change-amended-content {
+    background-color: #fff9eb;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.astp-change-amended-content em {
+    color: #92400e;
+    font-weight: 500;
+}
+
+.astp-change-diff {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.astp-change-diff ins {
+    background-color: #dcfce7;
+    text-decoration: none;
+    padding: 0 0.25rem;
+}
+
+.astp-change-diff del {
+    background-color: #fee2e2;
+    text-decoration: line-through;
+    padding: 0 0.25rem;
+}
+
+/* Version Comparison Page */
+.astp-version-comparison-selector {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+}
+
+.astp-comparison-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+.astp-comparison-field {
+    flex: 1;
+    min-width: 200px;
+}
+
+.astp-comparison-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.astp-comparison-field select {
+    width: 100%;
+}
+
+.astp-comparison-buttons {
+    flex: 0 0 auto;
+    align-self: flex-end;
+}
+
+.astp-comparison-results {
+    margin-top: 30px;
+}
+
+.astp-comparison-header {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+/* Block diff styling */
+.astp-block-diff {
+    margin: 15px 0;
+    border: 1px solid #e5e5e5;
+    padding: 15px;
+    background: #f9f9f9;
+}
+
+.astp-block-diff table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.astp-block-diff td {
+    padding: 5px;
+    vertical-align: top;
+}
+
+.astp-block-diff ins {
+    background: #c6e1c6;
+    text-decoration: none;
+    padding: 1px 3px;
+}
+
+.astp-block-diff del {
+    background: #f8a9a9;
+    text-decoration: line-through;
+    padding: 1px 3px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 782px) {
+    .astp-changes-counts {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .astp-changes-badge {
+        width: fit-content;
+    }
+    
+    .astp-changes-section {
+        padding: 0.75rem;
+    }
+}
+
+/* Version History Page with separate document types */
+.astp-document-history-section {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.astp-document-history-section:last-child {
+    border-bottom: none;
+}
+
+.astp-document-history-section h2 {
+    margin-top: 0;
+    padding: 10px 15px;
+    border-radius: 4px 4px 0 0;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.astp-ccg-title {
+    color: #006eb4;
+    background-color: rgba(0, 110, 180, 0.1);
+    border-left: 4px solid #006eb4;
+}
+
+.astp-tp-title {
+    color: #3c6e21;
+    background-color: rgba(60, 110, 33, 0.1);
+    border-left: 4px solid #3c6e21;
+}
+
+.astp-legacy-title {
+    color: #666;
+    background-color: rgba(102, 102, 102, 0.1);
+    border-left: 4px solid #666;
+}
+
+/* In case there are no versions */
+.astp-document-history-section .astp-admin-version-history + p {
+    margin-left: 15px;
+    font-style: italic;
+    color: #666;
+}

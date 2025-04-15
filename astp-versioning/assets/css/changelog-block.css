@@ -1,0 +1,634 @@
+/**
+ * Changelog Block Styles
+ */
+
+/* Block container */
+.astp-changelog-block {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 2rem;
+}
+
+/* Header */
+.astp-changelog-header {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.astp-changelog-header h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.astp-changelog-subtitle {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 0;
+}
+
+/* Tabs */
+.astp-changelog-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.astp-tab-button {
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-bottom: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin: 0 4px;
+    border-radius: 4px 4px 0 0;
+}
+
+.astp-tab-button:hover {
+    background-color: #f0f0f0;
+}
+
+.astp-tab-button.active {
+    background-color: #fff;
+    border-color: #ddd;
+    border-bottom: 2px solid #0071bc;
+    font-weight: bold;
+}
+
+/* Filters */
+.astp-changelog-filters {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.astp-changelog-filters label {
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+.astp-filter-dropdown {
+    padding: 4px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+/* Timeline */
+.astp-changelog-timeline {
+    border-left: 2px solid #0071bc;
+    padding-left: 20px;
+    margin-left: 10px;
+}
+
+.astp-version-group {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.astp-version-group:before {
+    content: '';
+    position: absolute;
+    left: -27px;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    background-color: #0071bc;
+    border-radius: 50%;
+}
+
+.astp-version-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.astp-version-date {
+    font-style: italic;
+    color: #666;
+}
+
+.astp-version-number {
+    font-weight: bold;
+    color: #0071bc;
+}
+
+/* Change items */
+.astp-change-item {
+    background-color: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.astp-change-paragraph {
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+    color: #666;
+}
+
+.astp-change-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.astp-change-content {
+    margin-bottom: 1rem;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.astp-change-content:last-child {
+    margin-bottom: 0;
+}
+
+.astp-change-type {
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+/* Change types */
+.astp-change-added {
+    background-color: #e6f7e6;
+    border-left: 3px solid #2e8540;
+}
+
+.astp-change-removed {
+    background-color: #f9e7e7;
+    border-left: 3px solid #e31c3d;
+}
+
+.astp-change-amended {
+    background-color: #e7f4f9;
+    border-left: 3px solid #02bfe7;
+}
+
+/* Highlights */
+mark.added {
+    background-color: #cfefcf;
+    padding: 2px 0;
+}
+
+mark.removed {
+    background-color: #f9cfcf;
+    text-decoration: line-through;
+    padding: 2px 0;
+}
+
+mark.amended {
+    background-color: #cfe8f9;
+    padding: 2px 0;
+}
+
+/* Footer */
+.astp-changelog-footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-style: italic;
+    color: #666;
+}
+
+/* Changelog Block Styles */
+
+/* Container and general layout */
+.tabs-panel__changelog {
+    font-family: 'Source Sans Pro', 'Helvetica Neue', 'Helvetica', 'Roboto', 'Arial', sans-serif;
+    color: #1b1b1b;
+    max-width: 1200px;
+    margin: 2rem 0;
+}
+
+.changelog-tab {
+    margin-bottom: 60px;
+}
+
+.changelog-tab .top {
+    margin-bottom: 2rem;
+}
+
+.changelog-tab .top h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.changelog-tab .top p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+/* Tabs navigation */
+.hit-ccg-single__pills {
+    margin-bottom: 1.5rem;
+}
+
+.tabs-primary {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #dfe1e2;
+}
+
+.tabs-primary li {
+    margin: 0;
+    padding: 0;
+}
+
+.tabs-primary a {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    font-weight: 700;
+    color: #565c65;
+    border-bottom: 4px solid transparent;
+}
+
+.tabs-primary a.active {
+    color: #2672de;
+    border-bottom-color: #2672de;
+}
+
+.tabs-primary a:hover:not(.active) {
+    color: #1a4480;
+    border-bottom-color: #c9c9c9;
+}
+
+/* Mobile select */
+.mobile-its-select {
+    display: none;
+    margin-bottom: 1rem;
+}
+
+.mobile-its-select label {
+    display: block;
+    font-size: 0.87rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.mobile-its-select select {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #565c65;
+    border-radius: 4px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Mobile filter */
+.mobile-filter-by-type {
+    display: none;
+    margin-bottom: 1.5rem;
+}
+
+/* Changelog container */
+.changelog-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.timeline {
+    flex: 3;
+    max-width: 75%;
+    padding-right: 2rem;
+}
+
+.sidebar {
+    flex: 1;
+    max-width: 25%;
+}
+
+/* Timeline styles */
+.timeline ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.timeline ul:before {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #dfe1e2;
+}
+
+.timeline .change {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.timeline .date {
+    font-size: 0.87rem;
+    font-weight: 700;
+    color: #71767a;
+    margin-left: 25px;
+    margin-bottom: 0.5rem;
+}
+
+.timeline .version {
+    padding-left: 25px;
+    position: relative;
+}
+
+.timeline .version:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #2672de;
+}
+
+.timeline .version .inner {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.timeline .version-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+/* Changes list */
+.changes {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0.5rem;
+}
+
+.change-section {
+    margin-bottom: 1.5rem;
+    border-left: 3px solid #f0f0f0;
+    padding-left: 1rem;
+}
+
+.change-item {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.change-added {
+    background-color: rgba(0, 128, 0, 0.1);
+}
+
+.change-removed {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.change-amended {
+    background-color: rgba(255, 165, 0, 0.1);
+}
+
+.paragraph {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.action {
+    margin: 0.5rem 0;
+    font-weight: 600;
+    color: #444;
+}
+
+.no-changes-message {
+    color: #666;
+    font-style: italic;
+}
+
+/* Sidebar styles */
+.sidebar h4 {
+    font-size: 0.87rem;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.filter-type {
+    list-style: none;
+    padding-left: 0;
+}
+
+.filter-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-bottom: 0.25rem;
+    width: 100%;
+    text-align: left;
+    border-radius: 4px;
+}
+
+.filter-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.filter-btn.selected {
+    background-color: #0073aa;
+    color: white;
+}
+
+/* Recent releases */
+.recent-releases-title {
+    margin-top: 2rem;
+}
+
+.recent-releases {
+    list-style: none;
+    padding-left: 0;
+    position: relative;
+}
+
+.recent-releases .indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 2rem;
+    background-color: #0073aa;
+    transition: transform 0.3s ease;
+}
+
+.recent-releases li {
+    padding: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.recent-releases a {
+    color: #2672de;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    display: block;
+}
+
+.recent-releases a:hover {
+    text-decoration: underline;
+}
+
+/* View archives button */
+.usa-button, .btn {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: #fff;
+    background-color: #2672de;
+    border: 2px solid #2672de;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn--icon-right:after {
+    content: "→";
+    margin-left: 0.5rem;
+}
+
+/* Empty state */
+.empty-message {
+    padding: 2rem;
+    text-align: center;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    color: #666;
+}
+
+.diff-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.diff-old, .diff-new {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.75rem;
+    border-radius: 4px;
+}
+
+.diff-old {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-left: 3px solid #d9534f;
+}
+
+.diff-new {
+    background-color: rgba(0, 128, 0, 0.1);
+    border-left: 3px solid #5cb85c;
+}
+
+.diff-old h5, .diff-new h5 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.regulatory-paragraph {
+    margin-bottom: 0.75rem;
+    padding: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+}
+
+.regulatory-paragraph strong {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: #333;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .timeline, .sidebar {
+        flex: 1 0 100%;
+        max-width: 100%;
+        padding-right: 0;
+    }
+    
+    .sidebar {
+        margin-top: 2rem;
+    }
+    
+    .mobile-only {
+        display: block;
+    }
+    
+    .diff-container {
+        flex-direction: column;
+    }
+}
+
+/* Ensure proper spacing and margin in the version display */
+.version {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.version .inner {
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.date {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+.version-number {
+    margin-top: 0;
+    color: #0073aa;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .mobile-its-select,
+    .mobile-filter-by-type {
+        display: block;
+    }
+    
+    .mobile-only {
+        display: block;
+    }
+    
+    .changelog-container {
+        flex-direction: column;
+    }
+    
+    .timeline {
+        padding-right: 0;
+        margin-bottom: 2rem;
+    }
+    
+    .sidebar {
+        width: 100%;
+    }
+    
+    .tabs-primary {
+        display: none;
+    }
+} 

@@ -1,0 +1,1186 @@
+<?php
+/**
+ * Server-side rendering for the changelog block
+ *
+ * @package ASTP_Versioning
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+// Include versioning functions if not already included
+if (!function_exists('astp_get_version_history')) {
+    require_once dirname(__FILE__) . '/versioning.php';
+}
+
+/**
+ * Configure the changelog block for server-side rendering
+ */
+function astp_configure_changelog_block() {
+    // Check if the block is already registered to prevent duplicate registrations
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log('Checking if changelog block is already registered');
+    }
+    
+    if (WP_Block_Type_Registry::get_instance()->is_registered('uswds-gutenberg/changelog-block')) {
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('Block uswds-gutenberg/changelog-block already registered, skipping registration');
+        }
+        return;
+    }
+    
+    // Skip if block editor is not available
+    if (!function_exists('register_block_type')) {
+        return;
+    }
+    
+    // Register the full-featured version (but don't set it as the editor_script)
+    wp_register_script(
+        'astp-changelog-block',
+        ASTP_VERSIONING_URL . 'custom-blocks/uswds-changelog-block.js',
+        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-block-editor', 'wp-i18n'),
+        filemtime(ASTP_VERSIONING_DIR . 'custom-blocks/uswds-changelog-block.js'),
+        true
+    );
+    
+    // Register the simple version (but don't set it as the editor_script)
+    wp_register_script(
+        'astp-changelog-block-fixed',
+        ASTP_VERSIONING_URL . 'custom-blocks/uswds-changelog-block-fixed.js',
+        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-block-editor', 'wp-i18n'),
+        filemtime(ASTP_VERSIONING_DIR . 'custom-blocks/uswds-changelog-block-fixed.js'),
+        true
+    );
+    
+    // Register the wrapper that will handle loading either script
+    wp_register_script(
+        'astp-changelog-block-wrapper',
+        ASTP_VERSIONING_URL . 'custom-blocks/changelog-block-wrapper.js',
+        array(
+            'wp-blocks', 
+            'wp-element', 
+            'wp-editor', 
+            'wp-components', 
+            'wp-data',
+            'wp-block-editor',
+            'wp-i18n',
+            'astp-changelog-block',
+            'astp-changelog-block-fixed'
+        ),
+        filemtime(ASTP_VERSIONING_DIR . 'custom-blocks/changelog-block-wrapper.js'),
+        true
+    );
+    
+    // Register the full-featured version (but don't set it as the editor_script)
+    wp_register_script(
+        'astp-changelog-block-fixed2',
+        ASTP_VERSIONING_URL . 'custom-blocks/uswds-changelog-block-fixed2.js',
+        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-block-editor', 'wp-i18n'),
+        filemtime(ASTP_VERSIONING_DIR . 'custom-blocks/uswds-changelog-block-fixed2.js'),
+        true
+    );
+    
+    // Register the initializer script
+    wp_register_script(
+        'astp-changelog-block-initializer',
+        ASTP_VERSIONING_URL . 'custom-blocks/changelog-block-initializer.js',
+        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-block-editor', 'wp-i18n'),
+        filemtime(ASTP_VERSIONING_DIR . 'custom-blocks/changelog-block-initializer.js'),
+        true
+    );
+    
+    // Register the block type
+    register_block_type('uswds-gutenberg/changelog-block', array(
+        'render_callback' => 'astp_render_changelog_block',
+        'attributes' => array(
+            'versionId' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'testMethodId' => array(
+                'type' => 'string',
+                'default' => ''
+            )
+        )
+    ));
+    
+    if (WP_DEBUG) {
+        error_log('Configured USWDS changelog block with smart wrapper'); 
+    }
+}
+
+// Remove any duplicate registrations
+remove_action('init', 'astp_configure_changelog_block', 20);
+add_action('init', 'astp_configure_changelog_block', 20);
+
+/**
+ * Render the changelog block
+ */
+function astp_render_changelog_block($attributes) {
+    // Get the current post ID or use the one from attributes
+    $post_id = isset($attributes['postId']) ? $attributes['postId'] : 0;
+    $current_post_id = get_the_ID();
+    
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log("CHANGELOG RENDER - Starting to render for post_id: " . $post_id);
+        error_log("CHANGELOG RENDER - Attributes: " . print_r($attributes, true));
+        error_log("CHANGELOG RENDER - Current post ID from get_the_ID(): " . $current_post_id);
+    }
+    
+    if ($post_id == 0 && $current_post_id) {
+        $post_id = $current_post_id;
+    }
+    
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log("CHANGELOG RENDER - Using final post_id: " . $post_id);
+    }
+    
+    // Get CCG and TP versions
+    $ccg_versions = astp_get_version_history('ccg', $post_id);
+    $tp_versions = astp_get_version_history('tp', $post_id);
+    
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log("CHANGELOG RENDER - Post ID: " . $post_id);
+        error_log("CHANGELOG RENDER - CCG Versions found: " . count($ccg_versions));
+        error_log("CHANGELOG RENDER - TP Versions found: " . count($tp_versions));
+        error_log("CHANGELOG RENDER - Called astp_get_version_history with doc_type \"ccg\" and post_id " . $post_id);
+        
+        if (!empty($ccg_versions)) {
+            error_log("CHANGELOG RENDER - First CCG version structure: " . print_r($ccg_versions[0], true));
+            error_log("CHANGELOG RENDER - Changes count: " . (isset($ccg_versions[0]['changes']) ? count($ccg_versions[0]['changes']) : 0));
+            if (isset($ccg_versions[0]['changes']) && !empty($ccg_versions[0]['changes'])) {
+                error_log("CHANGELOG RENDER - First change item: " . print_r($ccg_versions[0]['changes'][0], true));
+            }
+        }
+    }
+    
+    // Get all versions for CCG and TP
+    $all_versions = array();
+    foreach ($ccg_versions as $version) {
+        $all_versions[] = $version['version'];
+    }
+    foreach ($tp_versions as $version) {
+        $all_versions[] = $version['version'];
+    }
+    
+    // Sort and get unique versions
+    $unique_versions = array_unique($all_versions);
+    rsort($unique_versions);
+    
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log("CHANGELOG RENDER - All versions before unique/sort: " . print_r($all_versions, true));
+        error_log("CHANGELOG RENDER - Unique versions after sort: " . print_r($unique_versions, true));
+    }
+    
+    // Get recent versions (all versions for now, could be limited later)
+    $recent_versions = $unique_versions;
+    
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log("CHANGELOG RENDER - Recent versions: " . print_r($recent_versions, true));
+        error_log("CHANGELOG RENDER - Are recent versions empty? " . (empty($recent_versions) ? "Yes" : "No"));
+    }
+    
+    // Check if any versions have changes
+    $has_any_changes = false;
+    
+    foreach ($ccg_versions as $version) {
+        if (!empty($version['changes'])) {
+            $has_any_changes = true;
+            break;
+        }
+    }
+    
+    foreach ($tp_versions as $version) {
+        if (!empty($version['changes'])) {
+            $has_any_changes = true;
+            break;
+        }
+    }
+    
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log("CHANGELOG RENDER - Has any changes: " . ($has_any_changes ? "Yes" : "No"));
+    }
+    
+    // Get block attributes with defaults
+    $title = isset($attributes['title']) ? $attributes['title'] : 'Certification Companion Guide Changelog';
+    $subtitle = isset($attributes['subtitle']) ? $attributes['subtitle'] : 'The following changelog applies to:';
+    $subtitle_emphasis = isset($attributes['subtitleEmphasis']) ? $attributes['subtitleEmphasis'] : '§ 170.315(g)(10) Standardized API for patient and population services';
+    $enable_filters = isset($attributes['enableFilters']) ? $attributes['enableFilters'] : true;
+    $enable_tab_switching = isset($attributes['enableTabSwitching']) ? $attributes['enableTabSwitching'] : true;
+    
+    // Start output buffer
+    ob_start();
+    
+    // Main container
+    ?>
+    <div class="tabs-panel__changelog">
+        <div class="mobile-its-select">
+            <label for="section-select">IN THIS SECTION</label>
+            <select id="section-select"></select>
+            <a class="usa-button btn btn--icon-right view-all mobile-only" href="#" aria-label="View all archives">
+                View Archives
+            </a>
+        </div>
+        <div class="changelog-tab">
+            <div class="top">
+                <h2><?php echo esc_html($title); ?></h2>
+                <p>
+                    <?php echo esc_html($subtitle); ?>
+                    <br>
+                    <strong><?php echo esc_html($subtitle_emphasis); ?></strong>
+                </p>
+            </div>
+            
+            <?php if ($enable_tab_switching): ?>
+            <div class="tabs hit-ccg-single__pills">
+                <ul class="tabs-primary">
+                    <li>
+                        <a href="#tab-cert-changelog">Certification Companion Guide</a>
+                    </li>
+                    <li>
+                        <a href="#testing-changelog">Test Procedures</a>
+                    </li>
+                </ul>
+            </div>
+            <?php endif; ?>
+            
+            <?php if ($enable_filters): ?>
+            <div class="mobile-filter-by-type mobile-only">
+                <h4>FILTER BY TYPE</h4>
+                <ul class="filter-type">
+                    <li>
+                        <button class="selected filter-btn" type="button">All</button>
+                    </li>
+                    <li>
+                        <button class="filter-btn" type="button">Added</button>
+                    </li>
+                    <li>
+                        <button class="filter-btn" type="button">Amended</button>
+                    </li>
+                    <li>
+                        <button class="filter-btn" type="button">Removed</button>
+                    </li>
+                </ul>
+            </div>
+            <?php endif; ?>
+            
+            <div class="tabs-panels">
+                <div class="tabs-panel" id="tab-cert-changelog">
+                    <div class="changelog-container">
+                        <div class="timeline">
+                            <ul>
+                                <?php
+                                // Process CCG versions
+                                if (empty($ccg_versions)) {
+                                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                                        error_log("CHANGELOG RENDER - No changes in CCG versions");
+                                    }
+                                    echo '<p>No CCG versions found.</p>';
+                                } else {
+                                    $changes_detected = false;
+                                    
+                                    foreach ($ccg_versions as $version_data) {
+                                        if (defined('WP_DEBUG') && WP_DEBUG) {
+                                            error_log("CHANGELOG RENDER - Processing version " . $version_data['version'] . " with ID: " . $version_data['version_id']);
+                                        }
+                                        
+                                        // Get version details
+                                        $version_number = $version_data['version'];
+                                        $version_date = $version_data['date'];
+                                        $version_changes = isset($version_data['changes']) ? $version_data['changes'] : array();
+                                        $changelog_id = isset($version_data['changelog_id']) ? $version_data['changelog_id'] : '';
+                                        
+                                        if (defined('WP_DEBUG') && WP_DEBUG) {
+                                            error_log("CHANGELOG RENDER - Has changelog ID: " . $changelog_id);
+                                            error_log("CHANGELOG RENDER - Found " . count($version_changes) . " changes in version data");
+                                        }
+                                        
+                                        // Skip if no changes
+                                        if (empty($version_changes) && empty($changelog_id)) {
+                                            if (defined('WP_DEBUG') && WP_DEBUG) {
+                                                error_log("CHANGELOG RENDER - WARNING: No changelog ID found for this version");
+                                            }
+                                            ?>
+                                            <li class="change">
+                                                <div class="date"><?php echo esc_html($version_date); ?></div>
+                                                <div class="version">
+                                                    <div class="inner">
+                                                        <h3 class="version-number">Version <?php echo esc_html($version_number); ?></h3>
+                                                        <p>No changes recorded for this version.</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <?php
+                                            continue;
+                                        }
+                                        
+                                        if (defined('WP_DEBUG') && WP_DEBUG) {
+                                            error_log("CHANGELOG RENDER - Final version_changes count: " . count($version_changes));
+                                        }
+                                        
+                                        // Group changes by section
+                                        $changes_by_section = array();
+                                        
+                                        foreach ($version_changes as $change) {
+                                            $section = isset($change['section']) ? $change['section'] : 'Uncategorized';
+                                            $block_type = isset($change['block_type']) ? $change['block_type'] : 'unknown';
+                                            
+                                            if (defined('WP_DEBUG') && WP_DEBUG) {
+                                                error_log("CHANGELOG RENDER - Added change to section '{$section}': type=" . $change['type'] . ", block=" . $block_type);
+                                                
+                                                if ($block_type === 'uswds-gutenberg/regulatory-block' || stripos($section, 'regulatory') !== false) {
+                                                    error_log("CHANGELOG RENDER - FOUND REGULATORY TEXT BLOCK CHANGE");
+                                                }
+                                            }
+                                            
+                                            if (!isset($changes_by_section[$section])) {
+                                                $changes_by_section[$section] = array();
+                                            }
+                                            
+                                            $changes_by_section[$section][] = $change;
+                                        }
+                                        
+                                        if (count($changes_by_section) > 0) {
+                                            $changes_detected = true;
+                                        }
+                                        
+                                        if (defined('WP_DEBUG') && WP_DEBUG) {
+                                            error_log("CHANGELOG RENDER - Changes grouped by " . count($changes_by_section) . " sections");
+                                            error_log("CHANGELOG RENDER - Section keys: " . print_r(array_keys($changes_by_section), true));
+                                        }
+                                        
+                                        // Start version output
+                                        ?>
+                                        <li class="change">
+                                            <div class="date"><?php echo esc_html($version_date); ?></div>
+                                            <div class="version">
+                                                <div class="inner">
+                                                    <h3 class="version-number">Version <?php echo esc_html($version_number); ?></h3>
+                                                    <?php if (empty($changes_by_section)): ?>
+                                                        <?php if ($has_any_changes): ?>
+                                                            <p>Changes were detected but couldn't be processed for display. Please check the debug view.</p>
+                                                        <?php else: ?>
+                                                            <p>No changes found in this version.</p>
+                                                        <?php endif; ?>
+                                                    <?php else: ?>
+                                                        <ul class="changes">
+                                                            <?php foreach ($changes_by_section as $section => $section_changes): ?>
+                                                                <?php
+                                                                // Extract paragraph info from section name
+                                                                $paragraph_ref = '';
+                                                                $title = $section;
+                                                                
+                                                                if (preg_match('/Paragraph\s*\((.*?)\)/', $section, $matches)) {
+                                                                    $paragraph_ref = '(' . $matches[1] . ')';
+                                                                    $title_parts = explode(' - ', $section);
+                                                                    if (count($title_parts) > 1) {
+                                                                        $title = end($title_parts);
+                                                                    }
+                                                                }
+                                                                ?>
+                                                                <li>
+                                                                    <div class="changelog-info">
+                                                                        <div class="paragraph">Paragraph <?php echo esc_html($paragraph_ref); ?></div>
+                                                                        <h4 class="title"><?php echo esc_html($title); ?></h4>
+                                                                        
+                                                                        <?php
+                                                                        // Group changes by type within each section
+                                                                        $added_changes = array();
+                                                                        $removed_changes = array();
+                                                                        $amended_changes = array();
+                                                                        
+                                                                        foreach ($section_changes as $change) {
+                                                                            if ($change['type'] === 'added') {
+                                                                                $added_changes[] = $change;
+                                                                            } elseif ($change['type'] === 'removed') {
+                                                                                $removed_changes[] = $change;
+                                                                            } elseif ($change['type'] === 'amended') {
+                                                                                $amended_changes[] = $change;
+                                                                            }
+                                                                        }
+                                                                        
+                                                                        // Display added changes
+                                                                        if (!empty($added_changes)): ?>
+                                                                            <h5 class="action">Added:</h5>
+                                                                            <?php foreach ($added_changes as $change): ?>
+                                                                                <p class="content"><?php echo $change['content']; ?></p>
+                                                                            <?php endforeach; ?>
+                                                                        <?php endif; ?>
+                                                                        
+                                                                        <!-- Display removed changes -->
+                                                                        <?php if (!empty($removed_changes)): ?>
+                                                                            <h5 class="action">Removed:</h5>
+                                                                            <?php foreach ($removed_changes as $change): ?>
+                                                                                <p class="content"><?php echo $change['content']; ?></p>
+                                                                            <?php endforeach; ?>
+                                                                        <?php endif; ?>
+                                                                        
+                                                                        <!-- Display amended changes -->
+                                                                        <?php if (!empty($amended_changes)): ?>
+                                                                            <h5 class="action">Amended:</h5>
+                                                                            <?php foreach ($amended_changes as $change): ?>
+                                                                                <?php
+                                                                                // Special handling for clarification blocks
+                                                                                if (isset($change['block_type']) && (
+                                                                                    strpos($change['block_type'], 'clarification-block') !== false ||
+                                                                                    strpos($change['block_type'], 'clarification-item') !== false
+                                                                                )) {
+                                                                                    // Try to extract just the changed content from the original diff HTML
+                                                                                    $clean_diff = '';
+                                                                                    
+                                                                                    if (isset($change['content']) && preg_match('/<p class="content"><\/p><div class="diff-container">(.*?)<\/div><p><\/p>/s', $change['content'], $matches)) {
+                                                                                        if (defined('WP_DEBUG') && WP_DEBUG) {
+                                                                                            error_log("CHANGELOG RENDER - Matched diff container in clarification block");
+                                                                                        }
+                                                                                        
+                                                                                        // Extract just the numbers that changed
+                                                                                        if (preg_match_all('/<p>Lorem ipsum dolor sit amet…<\/p>\s*(\d+)/s', $matches[1], $number_matches)) {
+                                                                                            if (defined('WP_DEBUG') && WP_DEBUG) {
+                                                                                                error_log("CHANGELOG RENDER - Found number changes: " . print_r($number_matches[1], true));
+                                                                                            }
+                                                                                            
+                                                                                            $old_number = isset($number_matches[1][0]) ? $number_matches[1][0] : '';
+                                                                                            $new_number = isset($number_matches[1][1]) ? $number_matches[1][1] : '';
+                                                                                            
+                                                                                            if (!empty($old_number) && !empty($new_number)) {
+                                                                                                $clean_diff = '<div class="clean-diff">';
+                                                                                                $clean_diff .= '<p><strong>Content updated from</strong> ' . esc_html($old_number) . ' <strong>to</strong> ' . esc_html($new_number) . '</p>';
+                                                                                                $clean_diff .= '</div>';
+                                                                                            }
+                                                                                        }
+                                                                                        
+                                                                                        // Extract reference changes
+                                                                                        if (preg_match_all('/<span class="reference-name">(\d+)<\/span>/s', $matches[1], $ref_matches)) {
+                                                                                            if (defined('WP_DEBUG') && WP_DEBUG) {
+                                                                                                error_log("CHANGELOG RENDER - Found reference changes: " . print_r($ref_matches[1], true));
+                                                                                            }
+                                                                                            
+                                                                                            $old_ref = isset($ref_matches[1][0]) ? $ref_matches[1][0] : '';
+                                                                                            $new_ref = isset($ref_matches[1][1]) ? $ref_matches[1][1] : '';
+                                                                                            
+                                                                                            if (!empty($old_ref) && !empty($new_ref)) {
+                                                                                                $clean_diff .= '<div class="clean-diff">';
+                                                                                                $clean_diff .= '<p><strong>Reference updated from</strong> ' . esc_html($old_ref) . ' <strong>to</strong> ' . esc_html($new_ref) . '</p>';
+                                                                                                $clean_diff .= '</div>';
+                                                                                            }
+                                                                                        }
+                                                                                        
+                                                                                        if (!empty($clean_diff)) {
+                                                                                            echo $clean_diff;
+                                                                                        } else {
+                                                                                            echo $change['content'];
+                                                                                        }
+                                                                                    } else {
+                                                                                        echo $change['content'];
+                                                                                    }
+                                                                                } else {
+                                                                                    // Regular content
+                                                                                    echo $change['content'];
+                                                                                }
+                                                                                ?>
+                                                                            <?php endforeach; ?>
+                                                                        <?php endif; ?>
+                                                                    </div>
+                                                                </li>
+                                                            <?php endforeach; ?>
+                                                        </ul>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <?php
+                                    }
+                                    
+                                    if (!$changes_detected && defined('WP_DEBUG') && WP_DEBUG) {
+                                        error_log("CHANGELOG RENDER - No changes could be displayed in UI");
+                                        error_log("CHANGELOG RENDER - Has any changes flag: " . ($has_any_changes ? "true" : "false"));
+                                        error_log("CHANGELOG RENDER - CCG Versions count: " . count($ccg_versions));
+                                    }
+                                }
+                                ?>
+                            </ul>
+                        </div>
+                        
+                        <?php if ($enable_filters): ?>
+                        <div class="sidebar">
+                            <h4>FILTER BY TYPE</h4>
+                            <ul class="filter-type">
+                                <li>
+                                    <button class="selected filter-btn" type="button">All</button>
+                                </li>
+                                <li>
+                                    <button class="filter-btn" type="button">Added</button>
+                                </li>
+                                <li>
+                                    <button class="filter-btn" type="button">Amended</button>
+                                </li>
+                                <li>
+                                    <button class="filter-btn" type="button">Removed</button>
+                                </li>
+                            </ul>
+                            
+                            <h4 class="recent-releases-title">RECENT RELEASES</h4>
+                            <ul class="recent-releases">
+                                <div class="indicator"></div>
+                                <?php foreach ($recent_versions as $version): ?>
+                                    <li><a href="#version-<?php echo esc_attr(str_replace('.', '-', $version)); ?>">Version <?php echo esc_html($version); ?></a></li>
+                                <?php endforeach; ?>
+                            </ul>
+                            
+                            <a class="usa-button btn btn--icon-right" href="#" aria-label="View all archives">
+                                View Archives
+                            </a>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                
+                <?php if ($enable_tab_switching): ?>
+                <div class="tabs-panel" id="testing-changelog">
+                    <div class="changelog-container">
+                        <div class="timeline">
+                            <ul>
+                                <?php
+                                // Process TP versions
+                                if (empty($tp_versions)) {
+                                    echo '<p>No Test Procedure versions found.</p>';
+                                } else {
+                                    foreach ($tp_versions as $version_data) {
+                                        // Get version details
+                                        $version_number = $version_data['version'];
+                                        $version_date = $version_data['date'];
+                                        $version_changes = isset($version_data['changes']) ? $version_data['changes'] : array();
+                                        
+                                        // Skip if no changes
+                                        if (empty($version_changes)) {
+                                            ?>
+                                            <li class="change">
+                                                <div class="date"><?php echo esc_html($version_date); ?></div>
+                                                <div class="version">
+                                                    <div class="inner">
+                                                        <h3 class="version-number">Version <?php echo esc_html($version_number); ?></h3>
+                                                        <p>No changes recorded for this version.</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <?php
+                                            continue;
+                                        }
+                                        
+                                        // Group changes by section
+                                        $changes_by_section = array();
+                                        
+                                        foreach ($version_changes as $change) {
+                                            $section = isset($change['section']) ? $change['section'] : 'Uncategorized';
+                                            
+                                            if (!isset($changes_by_section[$section])) {
+                                                $changes_by_section[$section] = array();
+                                            }
+                                            
+                                            $changes_by_section[$section][] = $change;
+                                        }
+                                        
+                                        // Start version output
+                                        ?>
+                                        <li class="change">
+                                            <div class="date"><?php echo esc_html($version_date); ?></div>
+                                            <div class="version">
+                                                <div class="inner">
+                                                    <h3 class="version-number">Version <?php echo esc_html($version_number); ?></h3>
+                                                    <ul class="changes">
+                                                        <?php foreach ($changes_by_section as $section => $section_changes): ?>
+                                                            <?php
+                                                            // Extract paragraph info from section name
+                                                            $paragraph_ref = '';
+                                                            $title = $section;
+                                                            
+                                                            if (preg_match('/Paragraph\s*\((.*?)\)/', $section, $matches)) {
+                                                                $paragraph_ref = '(' . $matches[1] . ')';
+                                                                $title_parts = explode(' - ', $section);
+                                                                if (count($title_parts) > 1) {
+                                                                    $title = end($title_parts);
+                                                                }
+                                                            }
+                                                            ?>
+                                                            <li>
+                                                                <div class="changelog-info">
+                                                                    <div class="paragraph">Paragraph <?php echo esc_html($paragraph_ref); ?></div>
+                                                                    <h4 class="title"><?php echo esc_html($title); ?></h4>
+                                                                    
+                                                                    <?php
+                                                                    // Group changes by type within each section
+                                                                    $added_changes = array();
+                                                                    $removed_changes = array();
+                                                                    $amended_changes = array();
+                                                                    
+                                                                    foreach ($section_changes as $change) {
+                                                                        if ($change['type'] === 'added') {
+                                                                            $added_changes[] = $change;
+                                                                        } elseif ($change['type'] === 'removed') {
+                                                                            $removed_changes[] = $change;
+                                                                        } elseif ($change['type'] === 'amended') {
+                                                                            $amended_changes[] = $change;
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    // Display added changes
+                                                                    if (!empty($added_changes)): ?>
+                                                                        <h5 class="action">Added:</h5>
+                                                                        <?php foreach ($added_changes as $change): ?>
+                                                                            <p class="content"><?php echo $change['content']; ?></p>
+                                                                        <?php endforeach; ?>
+                                                                    <?php endif; ?>
+                                                                    
+                                                                    <!-- Display removed changes -->
+                                                                    <?php if (!empty($removed_changes)): ?>
+                                                                        <h5 class="action">Removed:</h5>
+                                                                        <?php foreach ($removed_changes as $change): ?>
+                                                                            <p class="content"><?php echo $change['content']; ?></p>
+                                                                        <?php endforeach; ?>
+                                                                    <?php endif; ?>
+                                                                    
+                                                                    <!-- Display amended changes -->
+                                                                    <?php if (!empty($amended_changes)): ?>
+                                                                        <h5 class="action">Amended:</h5>
+                                                                        <?php foreach ($amended_changes as $change): ?>
+                                                                        <?php
+                                                                        // Special handling for clarification blocks
+                                                                        if (isset($change['block_type']) && (
+                                                                            strpos($change['block_type'], 'clarification-block') !== false ||
+                                                                            strpos($change['block_type'], 'clarification-item') !== false
+                                                                        )) {
+                                                                            // Try to extract just the changed content from the original diff HTML
+                                                                            $clean_diff = '';
+                                                                            
+                                                                            if (isset($change['content']) && preg_match('/<p class="content"><\/p><div class="diff-container">(.*?)<\/div><p><\/p>/s', $change['content'], $matches)) {
+                                                                                if (defined('WP_DEBUG') && WP_DEBUG) {
+                                                                                    error_log("CHANGELOG RENDER - Matched diff container in clarification block");
+                                                                                }
+                                                                                
+                                                                                // Extract just the numbers that changed
+                                                                                if (preg_match_all('/<p>Lorem ipsum dolor sit amet…<\/p>\s*(\d+)/s', $matches[1], $number_matches)) {
+                                                                                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                                                                                        error_log("CHANGELOG RENDER - Found number changes: " . print_r($number_matches[1], true));
+                                                                                    }
+                                                                                    
+                                                                                    $old_number = isset($number_matches[1][0]) ? $number_matches[1][0] : '';
+                                                                                    $new_number = isset($number_matches[1][1]) ? $number_matches[1][1] : '';
+                                                                                    
+                                                                                    if (!empty($old_number) && !empty($new_number)) {
+                                                                                        $clean_diff = '<div class="clean-diff">';
+                                                                                        $clean_diff .= '<p><strong>Content updated from</strong> ' . esc_html($old_number) . ' <strong>to</strong> ' . esc_html($new_number) . '</p>';
+                                                                                        $clean_diff .= '</div>';
+                                                                                    }
+                                                                                }
+                                                                                
+                                                                                // Extract reference changes
+                                                                                if (preg_match_all('/<span class="reference-name">(\d+)<\/span>/s', $matches[1], $ref_matches)) {
+                                                                                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                                                                                        error_log("CHANGELOG RENDER - Found reference changes: " . print_r($ref_matches[1], true));
+                                                                                    }
+                                                                                    
+                                                                                    $old_ref = isset($ref_matches[1][0]) ? $ref_matches[1][0] : '';
+                                                                                    $new_ref = isset($ref_matches[1][1]) ? $ref_matches[1][1] : '';
+                                                                                    
+                                                                                    if (!empty($old_ref) && !empty($new_ref)) {
+                                                                                        $clean_diff .= '<div class="clean-diff">';
+                                                                                        $clean_diff .= '<p><strong>Reference updated from</strong> ' . esc_html($old_ref) . ' <strong>to</strong> ' . esc_html($new_ref) . '</p>';
+                                                                                        $clean_diff .= '</div>';
+                                                                                    }
+                                                                                }
+                                                                                
+                                                                                if (!empty($clean_diff)) {
+                                                                                    echo $clean_diff;
+                                                                                } else {
+                                                                                    echo $change['content'];
+                                                                                }
+                                                                            } else {
+                                                                                // Regular content
+                                                                                echo $change['content'];
+                                                                            }
+                                                                        }
+                                                                        ?>
+                                                                        <?php endforeach; ?>
+                                                                    <?php endif; ?>
+                                                                </div>
+                                                            </li>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </ul>
+                        </div>
+                        
+                        <?php if ($enable_filters): ?>
+                        <div class="sidebar">
+                            <h4>FILTER BY TYPE</h4>
+                            <ul class="filter-type">
+                                <li>
+                                    <button class="selected filter-btn" type="button">All</button>
+                                </li>
+                                <li>
+                                    <button class="filter-btn" type="button">Added</button>
+                                </li>
+                                <li>
+                                    <button class="filter-btn" type="button">Amended</button>
+                                </li>
+                                <li>
+                                    <button class="filter-btn" type="button">Removed</button>
+                                </li>
+                            </ul>
+                            
+                            <h4 class="recent-releases-title">RECENT RELEASES</h4>
+                            <ul class="recent-releases">
+                                <div class="indicator"></div>
+                                <?php foreach ($recent_versions as $version): ?>
+                                    <li><a href="#version-<?php echo esc_attr(str_replace('.', '-', $version)); ?>">Version <?php echo esc_html($version); ?></a></li>
+                                <?php endforeach; ?>
+                            </ul>
+                            
+                            <a class="usa-button btn btn--icon-right" href="#" aria-label="View all archives">
+                                View Archives
+                            </a>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <?php
+    
+    // Get output buffer contents and return
+    $output = ob_get_clean();
+    return $output;
+}
+
+/**
+ * Format change content with markup for added/removed/amended text
+ *
+ * @param string $content The change content
+ * @param string $type The change type ('added', 'removed', or 'amended')
+ * @return string The formatted content
+ */
+function astp_format_change_content($content, $type) {
+    // Process special markers in the content
+    $formatted_content = preg_replace_callback(
+        '/\[\[(.*?)\]\]/',
+        function($matches) use ($type) {
+            return '<mark class="' . $type . '">' . $matches[1] . '</mark>';
+        },
+        $content
+    );
+    
+    return $formatted_content;
+}
+
+/**
+ * Register and enqueue the changelog block styles and scripts
+ */
+function astp_enqueue_changelog_assets() {
+    // Handle CSS file
+    $css_file = ASTP_VERSIONING_DIR . 'assets/css/changelog-block.css';
+    $css_url = ASTP_VERSIONING_URL . 'assets/css/changelog-block.css';
+    
+    // Create the CSS directory if it doesn't exist
+    if (!file_exists(dirname($css_file))) {
+        wp_mkdir_p(dirname($css_file));
+    }
+    
+    // Create an empty CSS file if it doesn't exist
+    if (!file_exists($css_file)) {
+        file_put_contents($css_file, '/* Changelog Block Styles */');
+    }
+    
+    // Enqueue the stylesheet
+    wp_register_style(
+        'astp-changelog-styles',
+        $css_url,
+        array(),
+        file_exists($css_file) ? filemtime($css_file) : ASTP_VERSIONING_VERSION
+    );
+    
+    // Handle JS file
+    $js_file = ASTP_VERSIONING_DIR . 'assets/js/changelog-block.js';
+    $js_url = ASTP_VERSIONING_URL . 'assets/js/changelog-block.js';
+    
+    // Create the JS directory if it doesn't exist
+    if (!file_exists(dirname($js_file))) {
+        wp_mkdir_p(dirname($js_file));
+    }
+    
+    // Register the script (will be enqueued in render function when block is used)
+    wp_register_script(
+        'astp-changelog-frontend',
+        $js_url,
+        array('jquery'),
+        file_exists($js_file) ? filemtime($js_file) : ASTP_VERSIONING_VERSION,
+        true
+    );
+}
+add_action('init', 'astp_enqueue_changelog_assets');
+
+/**
+ * Debug shortcode to display version data for a specific post
+ */
+function astp_version_debug_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'post_id' => get_the_ID(),
+        'doc_type' => 'both', // can be 'ccg', 'tp', or 'both'
+    ), $atts, 'astp_version_debug');
+    
+    $post_id = intval($atts['post_id']);
+    $doc_type = $atts['doc_type'];
+    
+    ob_start();
+    
+    echo '<div class="astp-debug-container" style="background: #f5f5f5; padding: 20px; margin: 20px 0; border: 1px solid #ddd; font-family: monospace;">';
+    echo '<h2>Version Debug for Post ID: ' . esc_html($post_id) . '</h2>';
+    
+    if ($doc_type === 'both' || $doc_type === 'ccg') {
+        echo '<h3>CCG Versions:</h3>';
+        $ccg_versions = astp_get_version_history('ccg', $post_id);
+        if (empty($ccg_versions)) {
+            echo '<p>No CCG versions found.</p>';
+            
+            // Check for any versions that might exist without being properly categorized
+            $basic_args = array(
+                'post_type' => 'astp_version',
+                'posts_per_page' => -1,
+                'post_parent' => $post_id,
+            );
+            $basic_versions = get_posts($basic_args);
+            
+            if (!empty($basic_versions)) {
+                echo '<p>Found ' . count($basic_versions) . ' raw version posts. Details:</p>';
+                echo '<ul>';
+                foreach ($basic_versions as $bv) {
+                    $dt = get_post_meta($bv->ID, 'document_type', true);
+                    $vn = get_post_meta($bv->ID, 'version_number', true);
+                    $cl = get_post_meta($bv->ID, 'changelog_id', true);
+                    $status_terms = wp_get_object_terms($bv->ID, 'version_status', array('fields' => 'slugs'));
+                    
+                    echo '<li>';
+                    echo 'ID: ' . esc_html($bv->ID) . ', ';
+                    echo 'Title: ' . esc_html($bv->post_title) . ', ';
+                    echo 'Document Type: ' . esc_html($dt) . ', ';
+                    echo 'Version: ' . esc_html($vn) . ', ';
+                    echo 'Status: ' . esc_html(implode(',', $status_terms)) . ', ';
+                    echo 'Changelog ID: ' . esc_html($cl);
+                    
+                    if ($cl) {
+                        // Check different data storage formats
+                        $changes_data = get_post_meta($cl, 'changes_data', true);
+                        $changelog_block_data = get_post_meta($cl, 'changelog_block_data', true);
+                        $raw_changes = get_post_meta($cl, 'raw_changes_data', true);
+                        
+                        echo '<br>Changelog Data Found: ';
+                        echo !empty($changes_data) ? 'changes_data, ' : '';
+                        echo !empty($changelog_block_data) ? 'changelog_block_data, ' : '';
+                        echo !empty($raw_changes) ? 'raw_changes_data, ' : '';
+                        
+                        if (empty($changes_data) && empty($changelog_block_data) && empty($raw_changes)) {
+                            echo 'None';
+                        }
+                    }
+                    
+                    echo '</li>';
+                }
+                echo '</ul>';
+            }
+        } else {
+            echo '<p>Found ' . count($ccg_versions) . ' CCG versions.</p>';
+            
+            foreach ($ccg_versions as $index => $version) {
+                echo '<details open>';
+                echo '<summary>Version ' . esc_html($version['version']) . ' (' . esc_html($version['date']) . ') - ID: ' . 
+                     esc_html(isset($version['version_id']) ? $version['version_id'] : 'N/A') . '</summary>';
+                
+                echo '<div style="margin-left: 20px;">';
+                
+                // Get raw changes data directly from changelog meta
+                $cl_id = isset($version['changelog_id']) ? $version['changelog_id'] : 0;
+                $changes_found = false;
+                
+                if ($cl_id) {
+                    $raw_changes_data = get_post_meta($cl_id, 'changes_data', true);
+                    
+                    if (!empty($raw_changes_data)) {
+                        $changes_found = true;
+                        echo '<h4>Raw Changes Data:</h4>';
+                        echo '<div style="background: #fff; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; max-height: 300px; overflow: auto;">';
+                        
+                        // Display the added changes
+                        if (!empty($raw_changes_data['added'])) {
+                            echo '<h5 style="color: green;">Added (' . count($raw_changes_data['added']) . '):</h5>';
+                            echo '<ul>';
+                            foreach ($raw_changes_data['added'] as $change) {
+                                echo '<li>';
+                                if (isset($change['section']) && isset($change['section']['full_text'])) {
+                                    echo '<strong>Section:</strong> ' . esc_html($change['section']['full_text']) . '<br>';
+                                }
+                                if (isset($change['block']) && isset($change['block']['blockName'])) {
+                                    echo '<strong>Block Type:</strong> ' . esc_html($change['block']['blockName']) . '<br>';
+                                }
+                                
+                                // Extract paragraph content from regulatory block if available
+                                if (isset($change['block']['attrs']['paragraphs'])) {
+                                    foreach ($change['block']['attrs']['paragraphs'] as $paragraph) {
+                                        echo '<div style="margin: 5px 0 5px 15px; padding: 5px; border-left: 3px solid #4CAF50;">';
+                                        echo '<strong>Paragraph ' . esc_html($paragraph['number']) . ':</strong> ';
+                                        echo wp_kses_post($paragraph['text']);
+                                        echo '</div>';
+                                    }
+                                } else if (isset($change['block']['innerHTML'])) {
+                                    echo '<div style="margin: 5px 0; padding: 5px; border-left: 3px solid #4CAF50; max-height: 100px; overflow: auto;">';
+                                    echo '<strong>Content:</strong> ';
+                                    echo esc_html(substr($change['block']['innerHTML'], 0, 150)) . (strlen($change['block']['innerHTML']) > 150 ? '...' : '');
+                                    echo '</div>';
+                                }
+                                
+                                echo '</li>';
+                            }
+                            echo '</ul>';
+                        }
+                        
+                        // Display the removed changes
+                        if (!empty($raw_changes_data['removed'])) {
+                            echo '<h5 style="color: red;">Removed (' . count($raw_changes_data['removed']) . '):</h5>';
+                            echo '<ul>';
+                            foreach ($raw_changes_data['removed'] as $change) {
+                                echo '<li>';
+                                if (isset($change['section']) && isset($change['section']['full_text'])) {
+                                    echo '<strong>Section:</strong> ' . esc_html($change['section']['full_text']) . '<br>';
+                                }
+                                if (isset($change['block']) && isset($change['block']['blockName'])) {
+                                    echo '<strong>Block Type:</strong> ' . esc_html($change['block']['blockName']) . '<br>';
+                                }
+                                
+                                // Extract paragraph content from regulatory block if available
+                                if (isset($change['block']['attrs']['paragraphs'])) {
+                                    foreach ($change['block']['attrs']['paragraphs'] as $paragraph) {
+                                        echo '<div style="margin: 5px 0 5px 15px; padding: 5px; border-left: 3px solid #F44336;">';
+                                        echo '<strong>Paragraph ' . esc_html($paragraph['number']) . ':</strong> ';
+                                        echo wp_kses_post($paragraph['text']);
+                                        echo '</div>';
+                                    }
+                                } else if (isset($change['block']['innerHTML'])) {
+                                    echo '<div style="margin: 5px 0; padding: 5px; border-left: 3px solid #F44336; max-height: 100px; overflow: auto;">';
+                                    echo '<strong>Content:</strong> ';
+                                    echo esc_html(substr($change['block']['innerHTML'], 0, 150)) . (strlen($change['block']['innerHTML']) > 150 ? '...' : '');
+                                    echo '</div>';
+                                }
+                                
+                                echo '</li>';
+                            }
+                            echo '</ul>';
+                        }
+                        
+                        // Display the amended changes
+                        if (!empty($raw_changes_data['amended'])) {
+                            echo '<h5 style="color: orange;">Amended (' . count($raw_changes_data['amended']) . '):</h5>';
+                            echo '<ul>';
+                            foreach ($raw_changes_data['amended'] as $change) {
+                                echo '<li>';
+                                if (isset($change['section']) && isset($change['section']['full_text'])) {
+                                    echo '<strong>Section:</strong> ' . esc_html($change['section']['full_text']) . '<br>';
+                                }
+                                
+                                // Display old and new block details
+                                if (isset($change['old_block']) && isset($change['old_block']['blockName'])) {
+                                    echo '<strong>Block Type:</strong> ' . esc_html($change['old_block']['blockName']) . '<br>';
+                                    
+                                    // Extract old content
+                                    echo '<div style="margin: 5px 0; padding: 5px; border-left: 3px solid #F44336; max-height: 100px; overflow: auto;">';
+                                    echo '<strong>Old Content:</strong> ';
+                                    
+                                    if (isset($change['old_block']['attrs']['paragraphs'])) {
+                                        foreach ($change['old_block']['attrs']['paragraphs'] as $paragraph) {
+                                            echo '<div style="margin: 5px 0 0 10px;">';
+                                            echo '<strong>Paragraph ' . esc_html($paragraph['number']) . ':</strong> ';
+                                            echo wp_kses_post($paragraph['text']);
+                                            echo '</div>';
+                                        }
+                                    } else if (isset($change['old_block']['innerHTML'])) {
+                                        echo esc_html(substr($change['old_block']['innerHTML'], 0, 150)) . (strlen($change['old_block']['innerHTML']) > 150 ? '...' : '');
+                                    }
+                                    
+                                    echo '</div>';
+                                }
+                                
+                                if (isset($change['new_block'])) {
+                                    // Extract new content
+                                    echo '<div style="margin: 5px 0; padding: 5px; border-left: 3px solid #4CAF50; max-height: 100px; overflow: auto;">';
+                                    echo '<strong>New Content:</strong> ';
+                                    
+                                    if (isset($change['new_block']['attrs']['paragraphs'])) {
+                                        foreach ($change['new_block']['attrs']['paragraphs'] as $paragraph) {
+                                            echo '<div style="margin: 5px 0 0 10px;">';
+                                            echo '<strong>Paragraph ' . esc_html($paragraph['number']) . ':</strong> ';
+                                            echo wp_kses_post($paragraph['text']);
+                                            echo '</div>';
+                                        }
+                                    } else if (isset($change['new_block']['innerHTML'])) {
+                                        echo esc_html(substr($change['new_block']['innerHTML'], 0, 150)) . (strlen($change['new_block']['innerHTML']) > 150 ? '...' : '');
+                                    }
+                                    
+                                    echo '</div>';
+                                }
+                                
+                                echo '</li>';
+                            }
+                            echo '</ul>';
+                        }
+                        
+                        echo '</div>';
+                    }
+                }
+                
+                if (empty($version['changes']) && !$changes_found) {
+                    echo '<p>No changes found for this version.</p>';
+                    
+                    // Show metadata about the changelog
+                    if (!empty($version['changelog_id'])) {
+                        echo '<p>Changelog ID: ' . esc_html($version['changelog_id']) . '</p>';
+                        
+                        // Check for data in different formats
+                        $cl_id = $version['changelog_id'];
+                        $changes_data = get_post_meta($cl_id, 'changes_data', true);
+                        $changelog_block_data = get_post_meta($cl_id, 'changelog_block_data', true);
+                        $raw_changes = get_post_meta($cl_id, 'raw_changes_data', true);
+                        
+                        echo '<p>Raw data check:</p>';
+                        echo '<ul>';
+                        echo '<li>changes_data: ' . (!empty($changes_data) ? 'Found' : 'Not found') . '</li>';
+                        echo '<li>changelog_block_data: ' . (!empty($changelog_block_data) ? 'Found' : 'Not found') . '</li>';
+                        echo '<li>raw_changes_data: ' . (!empty($raw_changes) ? 'Found' : 'Not found') . '</li>';
+                        echo '</ul>';
+                    }
+                } else if (!empty($version['changes'])) {
+                    echo '<p>Changes found: ' . count($version['changes']) . '</p>';
+                    
+                    // Group changes by section
+                    $changes_by_section = array();
+                    foreach ($version['changes'] as $change) {
+                        $section = isset($change['section']) ? $change['section'] : 'General';
+                        if (!isset($changes_by_section[$section])) {
+                            $changes_by_section[$section] = array();
+                        }
+                        $changes_by_section[$section][] = $change;
+                    }
+                    
+                    // Display changes grouped by section
+                    if (!empty($changes_by_section)) {
+                        echo '<ul class="changes">';
+                        foreach ($changes_by_section as $section => $section_changes) {
+                            echo '<li class="change-section">';
+                            echo '<div class="changelog-info">';
+                            echo '<div class="paragraph">' . esc_html($section) . '</div>';
+                            
+                            foreach ($section_changes as $change) {
+                                $change_type = isset($change['type']) ? $change['type'] : 'general';
+                                $change_title = isset($change['title']) ? $change['title'] : '';
+                                $change_content = isset($change['content']) ? $change['content'] : '';
+                                
+                                echo '<div class="change-item change-' . esc_attr($change_type) . '">';
+                                if (!empty($change_title)) {
+                                    echo '<h4 class="title">' . esc_html($change_title) . '</h4>';
+                                }
+                                
+                                echo '<h5 class="action">' . ucfirst(esc_html($change_type)) . ':</h5>';
+                                echo '<div class="content">' . wp_kses_post($change_content) . '</div>';
+                                echo '</div>';
+                            }
+                            
+                            echo '</div>';
+                            echo '</li>';
+                        }
+                        echo '</ul>';
+                    } else {
+                        echo '<p class="no-changes-message">No changes could be processed for this version.</p>';
+                    }
+                }
+                
+                echo '</div>';
+                echo '</details>';
+            }
+        }
+    }
+    
+    echo '</div>';
+    
+    return ob_get_clean();
+}
+add_shortcode('astp_version_debug', 'astp_version_debug_shortcode');
+
+/**
+ * Debug shortcode to display raw changelog data
+ */
+function astp_raw_changelog_debug_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'post_id' => get_the_ID(),
+        'changelog_id' => 0,
+        'version_id' => 0,
+    ), $atts, 'astp_raw_changelog_debug');
+    
+    $post_id = intval($atts['post_id']);
+    $changelog_id = intval($atts['changelog_id']);
+    $version_id = intval($atts['version_id']);
+    
+    if (!$changelog_id && $version_id) {
+        $changelog_id = get_post_meta($version_id, 'changelog_id', true);
+    }
+    
+    if (!$changelog_id) {
+        return '<p>No changelog ID provided or found.</p>';
+    }
+    
+    ob_start();
+    
+    echo '<div class="astp-debug-container" style="background: #f5f5f5; padding: 20px; margin: 20px 0; border: 1px solid #ddd; font-family: monospace;">';
+    echo '<h2>Raw Changelog Data for ID: ' . esc_html($changelog_id) . '</h2>';
+    
+    // Get all post meta
+    $meta_keys = array(
+        'changes_data',
+        'changelog_block_data',
+        'changelog_changes',
+        'changelog_summary',
+        'version_id'
+    );
+    
+    foreach ($meta_keys as $key) {
+        $value = get_post_meta($changelog_id, $key, true);
+        echo '<h3>Meta Key: ' . esc_html($key) . '</h3>';
+        
+        if (empty($value)) {
+            echo '<p>No data found.</p>';
+        } else {
+            echo '<pre style="background: #fff; padding: 10px; overflow: auto; max-height: 400px;">';
+            echo esc_html(print_r($value, true));
+            echo '</pre>';
+        }
+    }
+    
+    // Get the post itself
+    $changelog_post = get_post($changelog_id);
+    if ($changelog_post) {
+        echo '<h3>Changelog Post</h3>';
+        echo '<pre style="background: #fff; padding: 10px; overflow: auto; max-height: 400px;">';
+        echo esc_html(print_r($changelog_post, true));
+        echo '</pre>';
+    }
+    
+    echo '</div>';
+    
+    return ob_get_clean();
+}
+add_shortcode('astp_raw_changelog_debug', 'astp_raw_changelog_debug_shortcode'); 

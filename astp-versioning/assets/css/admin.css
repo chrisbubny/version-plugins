@@ -1,0 +1,256 @@
+/**
+ * ASTP Versioning - Admin Styles
+ */
+
+.astp-version-controls {
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    margin-bottom: 15px;
+}
+
+.astp-version-controls h4 {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.astp-version-controls select {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.astp-version-status {
+    padding: 5px;
+    border-radius: 3px;
+    display: inline-block;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.astp-status-published {
+    background: #c6e1c6;
+    color: #5b841b;
+}
+
+.astp-status-development {
+    background: #f8dda7;
+    color: #94660c;
+}
+
+.astp-version-info {
+    margin-bottom: 20px;
+}
+
+/* Change tracking styles */
+.astp-change-type {
+    padding: 4px 8px;
+    border-radius: 3px;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.astp-change-type-addition {
+    background: #c6e1c6;
+    color: #5b841b;
+}
+
+.astp-change-type-removal {
+    background: #f8a9a9;
+    color: #881919;
+}
+
+.astp-change-type-amendment {
+    background: #e1e1c6;
+    color: #847b1b;
+}
+
+/* Admin Changes Display */
+.astp-changes-summary {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.astp-changes-counts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.astp-changes-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.astp-badge-added {
+    background-color: #e7f5e7;
+    color: #1e7e1e;
+    border: 1px solid #b4e0b4;
+}
+
+.astp-badge-removed {
+    background-color: #f9e7e7;
+    color: #b32d2d;
+    border: 1px solid #e7baba;
+}
+
+.astp-badge-amended {
+    background-color: #f9f5e7;
+    color: #876b1e;
+    border: 1px solid #e7dfb4;
+}
+
+.astp-admin-section {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.astp-section-header {
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 16px;
+}
+
+.astp-paragraph-reference {
+    color: #0073aa;
+    font-weight: 600;
+}
+
+.astp-section-title {
+    color: #23282d;
+}
+
+.astp-change-group {
+    margin-bottom: 20px;
+}
+
+.astp-change-type-header {
+    display: flex;
+    align-items: center;
+    margin: 15px 0 10px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.astp-change-type-header .dashicons {
+    margin-right: 5px;
+}
+
+.astp-change-group-added .astp-change-type-header {
+    color: #1e7e1e;
+}
+
+.astp-change-group-removed .astp-change-type-header {
+    color: #b32d2d;
+}
+
+.astp-change-group-amended .astp-change-type-header {
+    color: #876b1e;
+}
+
+.astp-admin-changes-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.astp-admin-change-item {
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 3px;
+    background: #f9f9f9;
+    border: 1px solid #eee;
+}
+
+.astp-change-added {
+    border-left: 3px solid #1e7e1e;
+}
+
+.astp-change-removed {
+    border-left: 3px solid #b32d2d;
+}
+
+.astp-change-amended {
+    border-left: 3px solid #876b1e;
+}
+
+.astp-change-header {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.astp-change-reference {
+    color: #0073aa;
+}
+
+.astp-change-content p:first-child {
+    margin-top: 0;
+}
+
+.astp-change-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Diff styling */
+.astp-change-diff {
+    margin-top: 10px;
+}
+
+.astp-change-diff ins {
+    background-color: #e7f5e7;
+    text-decoration: none;
+    padding: 1px 3px;
+}
+
+.astp-change-diff del {
+    background-color: #f9e7e7;
+    text-decoration: line-through;
+    padding: 1px 3px;
+}
+
+.astp-manual-diff {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.astp-manual-diff .diff-old {
+    background-color: #ffeaea;
+    padding: 10px;
+    border-radius: 3px;
+    border: 1px solid #f0d0d0;
+}
+
+.astp-manual-diff .diff-new {
+    background-color: #eaffea;
+    padding: 10px;
+    border-radius: 3px;
+    border: 1px solid #d0f0d0;
+}
+
+.astp-new-content {
+    background-color: #f8f8f8;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 3px;
+    border: 1px solid #e5e5e5;
+}
+
+/* No changes notice */
+.astp-no-changes {
+    padding: 10px 15px;
+    margin: 10px 0;
+} 
