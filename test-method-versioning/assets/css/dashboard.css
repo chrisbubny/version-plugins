@@ -1,0 +1,207 @@
+/**
+ * Test Method Dashboard CSS
+ */
+.tm-dashboard {
+	margin-top: 20px;
+}
+
+.tm-status-filters {
+	margin-bottom: 20px;
+}
+
+.tm-status-filters ul {
+	display: flex;
+	gap: 10px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.tm-status-filters li {
+	margin: 0;
+}
+
+.tm-status-filters li a {
+	display: inline-block;
+	padding: 8px 12px;
+	text-decoration: none;
+	background-color: #f0f0f0;
+	border-radius: 4px;
+}
+
+.tm-status-filters li.current a {
+	background-color: #2271b1;
+	color: #fff;
+}
+
+.tm-status-badge {
+	display: inline-block;
+	padding: 5px 8px;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.tm-status-draft {
+	background-color: #f0f0f0;
+	color: #666;
+}
+
+.tm-status-submitted {
+	background-color: #e5f5fa;
+	color: #0c7cba;
+}
+
+.tm-status-approved {
+	background-color: #ecf9ec;
+	color: #1c7d1c;
+}
+
+.tm-status-rejected {
+	background-color: #fbe9e7;
+	color: #c62828;
+}
+
+.tm-status-published {
+	background-color: #f1f8e9;
+	color: #558b2f;
+}
+
+.tm-status-revision {
+	background-color: #fff8e1;
+	color: #ff8f00;
+}
+
+.tm-actions {
+	display: flex;
+	gap: 5px;
+}
+
+.tm-no-items {
+	padding: 20px;
+	background-color: #f0f0f0;
+	border-radius: 4px;
+	text-align: center;
+}
+
+.tm-modal {
+	display: none;
+	position: fixed;
+	z-index: 100000;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.tm-modal-content {
+	position: relative;
+	background-color: #fff;
+	margin: 5% auto;
+	padding: 20px;
+	border-radius: 4px;
+	width: 60%;
+	max-width: 800px;
+	max-height: 80%;
+	overflow-y: auto;
+}
+
+.tm-modal-close {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	font-size: 28px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.tm-approvals-list {
+	margin-top: 20px;
+}
+
+.tm-approval-item {
+	margin-bottom: 15px;
+	padding: 15px;
+	border-radius: 4px;
+}
+
+.tm-approval-approved {
+	background-color: #ecf9ec;
+}
+
+.tm-approval-rejected {
+	background-color: #fbe9e7;
+}
+
+.tm-approval-header {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.tm-approval-user {
+	font-weight: bold;
+}
+
+.tm-approval-status {
+	font-weight: bold;
+}
+
+.tm-approval-version {
+	margin-bottom: 10px;
+	font-style: italic;
+}
+
+.tm-approval-comments {
+	padding: 10px;
+	background-color: #f9f9f9;
+	border-radius: 4px;
+}
+
+#tm-comment-container,
+#tm-version-type-container {
+	margin: 15px 0;
+}
+
+#tm-comment-container label,
+#tm-version-type-container label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+#tm-comment {
+	width: 100%;
+}
+
+.tm-action-buttons {
+	margin-top: 20px;
+	display: flex;
+	gap: 10px;
+	justify-content: flex-end;
+}
+
+/* Admin table styling */
+.tm-posts-table {
+	border-collapse: collapse;
+	width: 100%;
+	margin-top: 15px;
+}
+
+.tm-posts-table th {
+	text-align: left;
+	padding: 10px;
+	background-color: #f5f5f5;
+	border-bottom: 1px solid #ccc;
+}
+
+.tm-posts-table td {
+	padding: 10px;
+	border-bottom: 1px solid #eee;
+	vertical-align: middle;
+}
+
+.tm-posts-table tr:hover {
+	background-color: #f9f9f9;
+}
