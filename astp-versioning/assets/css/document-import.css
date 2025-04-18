@@ -1,0 +1,50 @@
+/**
+ * Document Import Styles
+ */
+.astp-document-import-container {
+	margin-bottom: 20px;
+}
+
+.astp-import-options {
+	margin-bottom: 20px;
+}
+
+.astp-import-option {
+	margin-bottom: 15px;
+}
+
+.astp-import-option-content {
+	margin: 10px 0 10px 25px;
+	padding: 15px;
+	background: #f9f9f9;
+	border: 1px solid #e1e1e1;
+	border-radius: 3px;
+}
+
+#import-status {
+	padding: 10px;
+	background: #f9f9f9;
+	border: 1px solid #e1e1e1;
+	border-radius: 3px;
+}
+
+#import-result {
+	margin-top: 15px;
+}
+
+/* Create Revision dialog */
+#create-revision-dialog {
+	padding: 15px;
+	margin-top: 10px;
+	background: #f9f9f9;
+	border: 1px solid #e1e1e1;
+	border-radius: 3px;
+}
+
+.revision-buttons {
+	margin-top: 10px;
+}
+
+.revision-buttons .button {
+	margin-right: 5px;
+}
