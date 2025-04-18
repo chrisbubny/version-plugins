@@ -22,6 +22,7 @@ define('ASTP_VERSIONING_DIR', plugin_dir_path(__FILE__));
 define('ASTP_VERSIONING_URL', plugin_dir_url(__FILE__));
 define('ASTP_VERSIONING_VERSION', '1.0.0');
 define('ASTP_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('ASTP_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
 /**
  * Main ASTP Versioning class
@@ -72,6 +73,11 @@ class ASTP_Versioning {
         require_once ASTP_VERSIONING_DIR . 'includes/test-method-blocks.php';
         require_once ASTP_VERSIONING_DIR . 'includes/custom-blocks.php';
         require_once ASTP_VERSIONING_DIR . 'includes/changelog-render.php';
+        
+        // New revision system files
+        require_once ASTP_VERSIONING_DIR . 'includes/class-astp-revision-post-type.php';
+        require_once ASTP_VERSIONING_DIR . 'includes/class-astp-document-import.php';
+        require_once ASTP_VERSIONING_DIR . 'includes/class-astp-revision-publishing.php';
         
         // Debug helpers
         if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -152,7 +158,8 @@ class ASTP_Versioning {
             '/pdf',
             '/word',
             '/html',
-            '/snapshots'
+            '/snapshots',
+            '/test-method-revisions' // New directory for revision documents
         );
         
         foreach ($dirs as $dir) {
@@ -178,7 +185,7 @@ class ASTP_Versioning {
         global $post_type;
         
         // Load on specific post types
-        $post_types = array('test_method', 'astp_version');
+        $post_types = array('test_method', 'astp_version', 'test_method_revision');
         
         // Check if we're on a relevant page
         $is_relevant_page = false;
@@ -197,7 +204,7 @@ class ASTP_Versioning {
         }
         
         // Block editor assets - only load on our specific post type editor screens
-        if ($post_type === 'test_method' && in_array($hook, array('post.php', 'post-new.php'))) {
+        if (($post_type === 'test_method' || $post_type === 'test_method_revision') && in_array($hook, array('post.php', 'post-new.php'))) {
             // Enqueue core editor dependencies
             wp_enqueue_script('wp-blocks');
             wp_enqueue_script('wp-element');
@@ -285,4 +292,92 @@ function astp_versioning_init() {
 }
 
 // Launch the plugin
-astp_versioning_init(); 
+astp_versioning_init();
+
+/**
+ * ASTP_Create_Revision Class
+ * This handles the AJAX for creating revisions from test_methods
+ */
+class ASTP_Create_Revision {
+    
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        add_action('wp_ajax_astp_create_revision', array($this, 'ajax_create_revision'));
+    }
+    
+    /**
+     * AJAX handler for creating revisions
+     */
+    public function ajax_create_revision() {
+        // Check nonce
+        check_ajax_referer('astp_create_revision_nonce', 'nonce');
+        
+        // Check permissions
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'astp-versioning')));
+        }
+        
+        $parent_id = isset($_POST['parent_id']) ? intval($_POST['parent_id']) : 0;
+        $revision_type = isset($_POST['revision_type']) ? sanitize_text_field($_POST['revision_type']) : '';
+        
+        if (!$parent_id || !$revision_type) {
+            wp_send_json_error(array('message' => __('Invalid parameters.', 'astp-versioning')));
+        }
+        
+        // Get parent post
+        $parent = get_post($parent_id);
+        
+        if (!$parent || 'test_method' !== $parent->post_type) {
+            wp_send_json_error(array('message' => __('Invalid parent test method.', 'astp-versioning')));
+        }
+        
+        // Create revision
+        $revision_id = $this->create_revision($parent, $revision_type);
+        
+        if (is_wp_error($revision_id)) {
+            wp_send_json_error(array('message' => $revision_id->get_error_message()));
+        }
+        
+        wp_send_json_success(array(
+            'message' => __('Revision created successfully.', 'astp-versioning'),
+            'redirect' => get_edit_post_link($revision_id, 'url')
+        ));
+    }
+    
+    /**
+     * Create revision post
+     */
+    private function create_revision($parent, $revision_type) {
+        // Create new post
+        $revision_id = wp_insert_post(array(
+            'post_title' => sprintf(__('Revision of %s', 'astp-versioning'), $parent->post_title),
+            'post_type' => 'test_method_revision',
+            'post_status' => 'draft',
+            'post_author' => get_current_user_id(),
+        ), true);
+        
+        if (is_wp_error($revision_id)) {
+            return $revision_id;
+        }
+        
+        // Set post meta
+        update_post_meta($revision_id, '_parent_test_method', $parent->ID);
+        update_post_meta($revision_id, '_revision_type', $revision_type);
+        
+        // Set version types based on revision type
+        if ('ccg' === $revision_type || 'both' === $revision_type) {
+            update_post_meta($revision_id, '_ccg_version_type', 'minor');
+        }
+        
+        if ('tp' === $revision_type || 'both' === $revision_type) {
+            update_post_meta($revision_id, '_tp_version_type', 'minor');
+        }
+        
+        return $revision_id;
+    }
+}
+
+// Initialize the class
+new ASTP_Create_Revision();
