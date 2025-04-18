@@ -404,5 +404,35 @@ class ASTP_Revision_Post_Type {
 		if ( empty( $test_methods ) ) {
 			return;
 		}
+	     }
 		
-		?>
+			/**
+			 * Filter by parent
+			 */
+			public function filter_by_parent( $query ) {
+				global $pagenow, $typenow;
+				
+				if ( 'edit.php' !== $pagenow || 'test_method_revision' !== $typenow ) {
+					return $query;
+				}
+				
+				if ( ! isset( $_GET['parent_test_method'] ) || empty( $_GET['parent_test_method'] ) ) {
+					return $query;
+				}
+				
+				$parent_id = intval( $_GET['parent_test_method'] );
+				
+				$query->query_vars['meta_query'] = array(
+					array(
+						'key' => '_parent_test_method',
+						'value' => $parent_id,
+						'compare' => '=',
+					),
+				);
+				
+				return $query;
+			}
+		}
+		
+		// Initialize the class
+		new ASTP_Revision_Post_Type();
